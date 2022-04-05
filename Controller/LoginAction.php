@@ -1,7 +1,7 @@
 <?php
     session_start();
     $username = $password = "";
-    $isEmpty = $isValid = false;
+    $isEmpty = false;
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         function test($data) {
@@ -16,7 +16,7 @@
 
         if(empty($username))
             $isEmpty = true;
-            
+
         if(empty($password))
             $isEmpty = true;
 
@@ -36,26 +36,29 @@
             $data = $result->fetch_assoc();
             
             if($data['Username'] == $username and $data['Password'] == $password) {
-                $_SESSION['name'] = $data['Institutename'];
+                $_SESSION['name'] = $data['InstituteName'];
                 $_SESSION['email'] = $data['Email'];
-                $_SESSION['phone'] = $data['Contact'];  
-                $_SESSION['preaddress'] = $data['Address'];  
+                $_SESSION['phone'] = $data['Contact'];
+                $_SESSION['preaddress'] = $data['Address'];
                 
                 $_SESSION['username'] = $username;
                 $_SESSION['password'] = $password;
+
+                if(empty($_POST['remember'])) {
+                    setcookie('rem', '', time() + 10, '/');
+                }
                 header("Location: /ProjectEZ/View/Dashboard.php");
-                $isValid = true;
             }
             else {
                 header("Location: /ProjectEZ/View/login.php");
-                setcookie('msg', "*Username or Password incorrect<br><br>", time() + 1, "/");
+                setcookie('msg', "❌Username or Password incorrect<br><br>", time() + 1, "/");
             }
 
             $ezl->close();
         }
         else {
             header("Location: /ProjectEZ/View/login.php");
-            setcookie('msg', '*Please input  Username and Password<br><br>', time() + 1, "/");
+            setcookie('msg', '❌Please input  Username and Password<br><br>', time() + 1, "/");
         }
     }
 ?>

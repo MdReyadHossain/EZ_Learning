@@ -3,12 +3,14 @@
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
+    
+    $ezl = new mysqli("localhost", "root", "", "ezlearning");
+    if ($ezl->connect_error) {
+        die("Data base Connection failed: " . $ezl->connect_error);
+    }
 
-    define("t", "../Model/student.json");
-    $handle_t = fopen(t, "r");
-    $fr1 = fread($handle_t, filesize(t));
-    $arr1 = json_decode($fr1);
-    $fc1 = fclose($handle_t);
+    $sql = "SELECT * FROM student";
+    $result = $ezl->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +22,7 @@
         <title>Student</title>
     </head>
     <body>
-    <?php include($root . '/View/Adminbar.php') ?>
+    <?php include('../View/Adminbar.php') ?>
     <fieldset style="width: 50%; height: 450px; overflow: scroll;">
         <legend><b>Students</b></legend>
         <h3 align="center">Students Information</h3>
@@ -29,37 +31,25 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Gender</th>
+                    <th>Date of Birth</th>
                     <th>Religion</th>
                     <th>Email</th>
                     <th>Phone No</th>
                     <th>Username</th>
                     <th>Action</th>
                 </tr>
-                <?php 
-                    if ($arr1 === NULL) {
-                        echo "<tr>";
-                            echo "<td>--</td>";
-                            echo "<td>--</td>";
-                            echo "<td>--</td>";
-                            echo "<td>--</td>";
-                            echo "<td>--</td>";
-                            echo "<td>--</td>";
-                            echo "<td>--</td>";
-                            echo "<td>--</td>"; 
-                        echo "</tr>";
-                    }
-                    else {
-                        for ($i = 0; $i < count($arr1); $i++) {
+                <?php
+                    if ($result->num_rows > 0) {
+                        while ($data = $result->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td> 10-" . $arr1[$i]->sl . "</td>";
-                            echo "<td>" . $arr1[$i]->fname . " " . $arr1[$i]->lname . "</td>";
-                            echo "<td>" . $arr1[$i]->gender . "</td>";
-                            echo "<td>" . $arr1[$i]->religion . "</td>";
-                            echo "<td>" . $arr1[$i]->email . "</td>";
-                            echo "<td>" . $arr1[$i]->phone . "</td>";
-                            echo "<td>" . $arr1[$i]->username . "</td>";
-                            echo "<td>" . "<a href='/ProjectEZ/Controller/DeleteActionStudent.php?sl=" . $arr1[$i]->sl . "'>Delete</a></td></tr>";
+                            echo "<td> 10-" . $data['ID'] . "</td>";
+                            echo "<td>" . $data['FirstName'] . " " . $data['LastName'] . "</td>";
+                            echo "<td>" . $data['DateOfBirth'] . "</td>";
+                            echo "<td>" . $data['Religion'] . "</td>";
+                            echo "<td>" . $data['Email'] . "</td>";
+                            echo "<td>" . $data['PhoneNo'] . "</td>";
+                            echo "<td>" . $data['Username'] . "</td>";
+                            echo "<td>" . "<a href='/ProjectEZ/Controller/DeleteActionStudent.php?sl='>Delete</a></td></tr>";
                         }
                     }
                 ?>

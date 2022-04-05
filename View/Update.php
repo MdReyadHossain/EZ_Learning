@@ -3,12 +3,6 @@
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
-
-    define("file", "../Model/user.json");
-    $handle = fopen(file, "r");
-    $fr = fread($handle, filesize(file));
-    $json = json_decode($fr);
-    fclose($handle);
 ?>
 
 <!DOCTYPE html>
@@ -34,20 +28,11 @@
             <table>
                 <tr>
                     <td>
-                        <label for="fname">First Name </label>
+                        <label for="name">Institute Name </label>
                     </td>
                     <td>:</td>
                     <td>
-                        <input type="text" name="firstname" id="fname" value="<?php echo $_SESSION['fname']; ?>" readonly>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="lname">Last Name </label>
-                    </td>
-                    <td>:</td>
-                    <td>
-                        <input type="text" name="lastname" id="lname" value="<?php echo $_SESSION['lname']; ?>" readonly>
+                        <input type="text" name="name" id="name" value="<?php echo $_SESSION['name']; ?>" readonly>
                     </td>
                 </tr>
                 <tr>

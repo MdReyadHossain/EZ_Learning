@@ -1,9 +1,9 @@
 <?php
     echo "<h2>Update Profile</h2>";
     session_start();
-    $firstname = $lastname = $email = $preaddress = $phone = "";
+    $name = $email = $preaddress = $phone = "";
 
-    $firstnameErr = $lastnameErr = $preaddressErr = $phoneErr = $emailErr = $usernameErr = $passwordErr = "";
+    $nameErr = $preaddressErr = $phoneErr = $emailErr = $usernameErr = $passwordErr = "";
 
     $isValid = true;
     $isChecked = $isEmpty = false;
@@ -16,9 +16,7 @@
             $data = htmlspecialchars($data);
             return $data;
         }
-
-        $firstname = test($_POST["firstname"]);
-        $lastname = test($_POST["lastname"]);
+        $name = test($_POST["name"]);
         $preaddress = test($_POST["preaddress"]);
         $phone = test($_POST["phone"]);
         $email = test($_POST["email"]);
@@ -39,7 +37,7 @@
         }
         elseif(!is_numeric($phone)) {
             $isValid = false;
-            $phoneErr = "<b>*Invalid Contact Number</b>";
+            $phoneErr = "<b>❌Invalid Contact Number</b>";
         }
 
         if(empty($preaddress)) {
@@ -54,7 +52,7 @@
 
         else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $isValid = false;
-            $emailErr = "<b>*Invalid email format</b>";
+            $emailErr = "<b>❌Invalid email format</b>";
         }
 
     }
@@ -87,7 +85,7 @@
     }
 
     else if($isEmpty) {
-        setcookie('err', "*<b>Required input should not empty</b>", time() + 1, "/");
+        setcookie('err', "<b>❌Required input should not empty</b>", time() + 1, "/");
         header("location: /ProjectEZ/View/Update.php");
     }
 

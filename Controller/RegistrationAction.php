@@ -24,7 +24,6 @@
         $paraddress = test($_POST["paraddress"]);
         $phone = test($_POST["phone"]);
         $email = test($_POST["email"]);
-        $website = test($_POST["website"]);
         $username = test($_POST["username"]);
         $password = test($_POST["password"]);
         $conpassword = test($_POST["conpassword"]);
@@ -53,11 +52,11 @@
 
         else if ($year < 5) {
             $isValid = false;
-            $dobErr = "<br>*You are not old enough, Must be 5 or older";
+            $dobErr = "<br>❌You are not old enough, Must be 5 or older";
         }
         if($religion == "none") {
             $isValid = false;
-            $religionErr = "<br>*Please select your religion";
+            $religionErr = "<br>❌Please select your religion";
         }
 
         if(empty($preaddress)) {
@@ -72,7 +71,7 @@
 
         else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $isValid = false;
-            $emailErr = "<br>*Invalid email format";
+            $emailErr = "<br>❌Invalid email format";
         }
 
         if(empty($username)) {
@@ -82,7 +81,7 @@
 
         if(strlen($username) > 8) {
             $isValid = false;
-            $usernameErr = "<br>*Username up to 8 characters long";
+            $usernameErr = "<br>❌Username up to 8 characters long";
         }
 
         if(empty($password)) {
@@ -92,7 +91,7 @@
 
         else if(strlen($password) < 8) {
             $isValid = false;
-            $passwordErr = "<br>*Password must be at least 8 characters long";
+            $passwordErr = "<br>❌Password must be at least 8 characters long";
         }
 
         if(empty($conpassword)) {
@@ -102,7 +101,7 @@
 
         if($password != $conpassword) {
             $isValid = false;
-            $passwordErr = "<br>*Password not matched";
+            $passwordErr = "<br>❌Password not matched";
         }
 
         if($isValid and $isChecked){
@@ -117,11 +116,11 @@
                 die("Data base Connection failed: " . $ezl->connect_error);
             }
             
-            $sql = "INSERT INTO student(FirstName, LastName, Gender, DateOfBirth, Religion, PresentAddress, PermanentAddress, PhoneNo, Email, Username, Password) VALUES ('$firstname', '$lastname', '$gender', '$dob', '$religion', '$preaddress', '$paraddress', $phone, '$email', '$username', '$password')";
+            $sql = "INSERT INTO student(FirstName, LastName, Gender, DateOfBirth, Religion, PresentAddress, PermanentAddress, PhoneNo, Email, Username, Password) VALUES ('$firstname', '$lastname', '$gender', '$dob', '$religion', '$preaddress', '$paraddress', '$phone', '$email', '$username', '$password')";
 
             if($ezl->query($sql)) {
                 header("location: /ProjectEZ/View/login.php");
-                setcookie('msg', '<b>Registration Successful</b>', time() + 1, '/');
+                setcookie('msg', '<b>✅ Registration Successful</b>', time() + 1, '/');
             }
             else {
                 echo "Error: " . $sql . "<br>" . $ezl->error;
@@ -131,7 +130,7 @@
         }
 
         else if ($isEmpty) {
-            setcookie('msg', '<b>*Required input missing</b><br>', time() + 1, '/');
+            setcookie('msg', '<b>❌Required input missing</b><br>', time() + 1, '/');
             header("location: /ProjectEZ/View/Registration.php");
         }
 

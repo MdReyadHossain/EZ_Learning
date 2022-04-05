@@ -4,11 +4,13 @@
         header("Location: /ProjectEZ/View/login.php");
     }
 
-    define("t", "../Model/teacher.json");
-    $handle_t = fopen(t, "r");
-    $fr1 = fread($handle_t, filesize(t));
-    $arr1 = json_decode($fr1);
-    $fc1 = fclose($handle_t);
+    $ezl = new mysqli("localhost", "root", "", "ezlearning");
+    if ($ezl->connect_error) {
+        die("Data base Connection failed: " . $ezl->connect_error);
+    }
+
+    $sql = "SELECT * FROM teacher";
+    $result = $ezl->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -30,32 +32,31 @@
                     <th>Teacher ID</th>
                     <th>Name</th>
                     <th>Gender</th>
-                    <th>Religion</th>
+                    <th>Date of Birth</th>
                     <th>Email</th>
                     <th>Phone No</th>
                     <th>Username</th>
                     <th colspan="2">Action</th>
                 </tr>
                 <?php 
-                    if ($arr1 === NULL) {}
-                    else {
-                        for ($i = 0; $i < count($arr1); $i++) {
+                    if ($result->num_rows > 0) {
+                        while ($data = $result->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td> 100-" . $arr1[$i]->sl . "</td>";
-                            echo "<td>" . $arr1[$i]->fname . " " . $arr1[$i]->lname . "</td>";
-                            echo "<td>" . $arr1[$i]->gender . "</td>";
-                            echo "<td>" . $arr1[$i]->religion . "</td>";
-                            echo "<td>" . $arr1[$i]->email . "</td>";
-                            echo "<td>" . $arr1[$i]->phone . "</td>";
-                            echo "<td>" . $arr1[$i]->username . "</td>";
-                            echo "<td>" . "<a href='/ProjectEZ/View/EditTeacher.php?sl=" . $arr1[$i]->sl . "'>Edit</a></td>";
-                            echo "<td>" . "<a href='/ProjectEZ/Controller/DeleteActionTeacher.php?sl=" . $arr1[$i]->sl . "'>Delete</a></td>";
+                            echo "<td> 10-" . $data['ID'] . "</td>";
+                            echo "<td>" . $data['Name'] . "</td>";
+                            echo "<td>" . $data['Gender'] . "</td>";
+                            echo "<td>" . $data['DateOfBirth'] . "</td>";
+                            echo "<td>" . $data['Email'] . "</td>";
+                            echo "<td>" . $data['Contact'] . "</td>";
+                            echo "<td>" . $data['Username'] . "</td>";
+                            echo "<td>" . "<a href='/ProjectEZ/View/EditTeacher.php?sl='>Edit</a></td>";
+                            echo "<td>" . "<a href='/ProjectEZ/Controller/DeleteActionTeacher.php?sl='>Delete</a></td>";
                         }
                     }
                 ?>
             </tbody>
         </table>
-        <a href="/ProjectEZ/View/TeacherForm.php"><p style="text-align: center;">Add a Teacher</p></a>
+        <a href="/Project/View/registration.php"><p style="text-align: center;">Add a Teacher</p></a>
     </fieldset>
     <br>
     <fieldset style="width: 98%;">

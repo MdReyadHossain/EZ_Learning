@@ -3,6 +3,12 @@
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
+
+    if(isset($_COOKIE['rem'])) {
+    }
+    else {
+    }
+
     define("t", "../Model/teacher.json");
     $handle_t = fopen(t, "r"); 
     $fr1 = fread($handle_t, filesize(t));

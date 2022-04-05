@@ -55,6 +55,8 @@
                     </tr>
                 </table> 
                 <br>
+                <input type="checkbox" name="remember" id="rem"><label for="rem">Remember me</label>
+                <br><br>
                 <input type="submit" name="login" value="Login">
             </fieldset>
         </form>

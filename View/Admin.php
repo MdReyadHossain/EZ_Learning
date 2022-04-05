@@ -11,7 +11,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Wbsite</title>
+        <title>Website</title>
     </head>
     <body>
         <?php include('../View/Adminbar.php') ?>
@@ -26,7 +26,7 @@
                     </td>
                     <td>:</td>
                     <td>
-                        <?php echo $_SESSION['fname'] . " " . $_SESSION['lname']; ?>
+                        <?php echo $_SESSION['name']; ?>
                     </td>
                 </tr>
                 <tr><td></td></tr>

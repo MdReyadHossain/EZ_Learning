@@ -38,6 +38,5 @@
         <fieldset>
             <?php include '../ProjectEZ/View/Footer.php'; ?>
         </fieldset>
-        
     </body>
 </html>
