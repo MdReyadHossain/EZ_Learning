@@ -3,7 +3,7 @@
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
-    
+
     $ezl = new mysqli("localhost", "root", "", "ezlearning");
     if ($ezl->connect_error) {
         die("Data base Connection failed: " . $ezl->connect_error);
@@ -42,7 +42,7 @@
                     if ($result->num_rows > 0) {
                         while ($data = $result->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td> 10-" . $data['ID'] . "</td>";
+                            echo "<td>" . $data['ID'] . "</td>";
                             echo "<td>" . $data['FirstName'] . " " . $data['LastName'] . "</td>";
                             echo "<td>" . $data['DateOfBirth'] . "</td>";
                             echo "<td>" . $data['Religion'] . "</td>";

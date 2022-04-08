@@ -4,22 +4,18 @@
         header("Location: /ProjectEZ/View/login.php");
     }
 
-    if(isset($_COOKIE['rem'])) {
-    }
-    else {
+    $ezl = new mysqli("localhost", "root", "", "ezlearning");
+
+
+    if ($ezl->connect_error) {
+        die("Data base Connection failed: " . $ezl->connect_error);
     }
 
-    define("t", "../Model/teacher.json");
-    $handle_t = fopen(t, "r"); 
-    $fr1 = fread($handle_t, filesize(t));
-    $arr1 = json_decode($fr1);
-    $fc1 = fclose($handle_t);
+    $sql1 = "SELECT * FROM teacher";
+    $sql2 = "SELECT * FROM student";
 
-    define("s", "../Model/student.json");
-    $handle_s = fopen(s, "r");
-    $fr2 = fread($handle_s, filesize(s));
-    $arr2 = json_decode($fr2);
-    $fc2 = fclose($handle_s);
+    $qry1 = $ezl->query($sql1);
+    $qry2 = $ezl->query($sql2);
 ?>
 
 <!DOCTYPE html>
@@ -50,25 +46,26 @@
                             <td>Student</td>
                         </tr>
                         <tr>
-                            <td><?php echo count($arr1); ?></td>
-                            <td><?php echo count($arr2); ?></td>
+                            <td><?php echo $qry1->num_rows; ?></td>
+                            <td><?php echo $qry2->num_rows; ?></td>
                         </tr>
                     </tbody>
                 </table>
                 <table border="1" style="margin-left: auto; margin-right: auto;">
                     <tbody>
                         <tr>
-                            <td rowspan="<?php echo count($arr1)+1; ?>">Teachers</td>
+                            <td rowspan="<?php echo $qry1->num_rows + 1; ?>">Teachers</td>
                         </tr>
                         <?php 
-                            for ($i = 0; $i < count($arr1); $i++) {
-                                echo "<tr><td>" . $arr1[$i]->fname . " " . $arr1[$i]->lname . "</tr></td>";
+                            while($row = $qry1->fetch_assoc()) {
+                                echo "<tr><td>" . $row['Name'] . "</tr></td>";
                             }
+                            $ezl->close();
                         ?>
                     </tbody>
                 </table>
         </fieldset>
-        
+        <br>
         <fieldset style="width: 98%;">
             <?php include '../View/Footer.php'; ?>
         </fieldset>

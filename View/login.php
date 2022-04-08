@@ -58,8 +58,10 @@
                 <input type="checkbox" name="remember" id="rem"><label for="rem">Remember me</label>
                 <br><br>
                 <input type="submit" name="login" value="Login">
+                <a href="/ProjectEZ/View/registration.php">Need to registration?</a>
             </fieldset>
         </form>
+
         <br>
         
         <fieldset style="width: 98%;">

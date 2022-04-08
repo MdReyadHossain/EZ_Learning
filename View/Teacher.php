@@ -10,7 +10,7 @@
     }
 
     $sql = "SELECT * FROM teacher";
-    $result = $ezl->query($sql);
+    $qry = $ezl->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -39,20 +39,21 @@
                     <th colspan="2">Action</th>
                 </tr>
                 <?php 
-                    if ($result->num_rows > 0) {
-                        while ($data = $result->fetch_assoc()) {
+                    if ($qry->num_rows > 0) {
+                        while ($data = $qry->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td> 10-" . $data['ID'] . "</td>";
+                            echo "<td> 101-" . $id = $data['ID'] . "</td>";
                             echo "<td>" . $data['Name'] . "</td>";
                             echo "<td>" . $data['Gender'] . "</td>";
                             echo "<td>" . $data['DateOfBirth'] . "</td>";
                             echo "<td>" . $data['Email'] . "</td>";
                             echo "<td>" . $data['Contact'] . "</td>";
                             echo "<td>" . $data['Username'] . "</td>";
-                            echo "<td>" . "<a href='/ProjectEZ/View/EditTeacher.php?sl='>Edit</a></td>";
-                            echo "<td>" . "<a href='/ProjectEZ/Controller/DeleteActionTeacher.php?sl='>Delete</a></td>";
+                            echo "<td>" . "<a href='/ProjectEZ/View/EditTeacher.php?id=$id'>Edit</a></td>";
+                            echo "<td>" . "<a href='/ProjectEZ/Controller/DeleteActionTeacher.php'>Delete</a></td>";
                         }
                     }
+                    $ezl->close();
                 ?>
             </tbody>
         </table>

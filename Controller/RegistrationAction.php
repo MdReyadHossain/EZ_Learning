@@ -127,6 +127,7 @@
             }
 
             $ezl->close();
+            // header("location: /ProjectEZ/Model/RegistrationDB.php");
         }
 
         else if ($isEmpty) {

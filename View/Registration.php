@@ -156,6 +156,7 @@
                 </table>
                 <br>
                 <input type='submit' name='submit' value='Submit'> <input type='reset' name='reset' value='Clear'>
+                <a href="/Project/View/registration.php">Join as a Teacher?</a>
             </fieldset>
             <br>
         </form>

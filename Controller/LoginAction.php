@@ -1,7 +1,7 @@
 <?php
     session_start();
     $username = $password = "";
-    $isEmpty = false;
+    $isEmpty = $isValid = false;
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         function test($data) {
@@ -31,15 +31,18 @@
                 die("Data base Connection failed: " . $ezl->connect_error);
             }
 
-            $sql = "SELECT * FROM admin";
-            $result = $ezl->query($sql);
-            $data = $result->fetch_assoc();
-            
-            if($data['Username'] == $username and $data['Password'] == $password) {
-                $_SESSION['name'] = $data['InstituteName'];
-                $_SESSION['email'] = $data['Email'];
-                $_SESSION['phone'] = $data['Contact'];
-                $_SESSION['preaddress'] = $data['Address'];
+            $sql1 = "SELECT * FROM admin";
+            $sql2 = "SELECT * FROM teacher";
+            $row1 = $ezl->query($sql1);
+            $row2 = $ezl->query($sql2);
+            $admin = $row1->fetch_assoc();
+            $cnt = 0;
+                        
+            if($admin['Username'] == $username and $admin['Password'] == $password) {
+                $_SESSION['name'] = $admin['InstituteName'];
+                $_SESSION['email'] = $admin['Email'];
+                $_SESSION['phone'] = $admin['Contact'];
+                $_SESSION['address'] = $admin['Address'];
                 
                 $_SESSION['username'] = $username;
                 $_SESSION['password'] = $password;
@@ -48,8 +51,26 @@
                     setcookie('rem', '', time() + 10, '/');
                 }
                 header("Location: /ProjectEZ/View/Dashboard.php");
+                $isValid = true;
             }
-            else {
+            else if($row2->num_rows > 0) {
+                while($teacher = $row2->fetch_assoc()) {
+                    if($teacher['Username'] == $username and $teacher['Password'] == $password) {
+                        $_SESSION['sl'] = $teacher['ID'];
+                        $_SESSION['name'] = $teacher['Name'];
+                        $_SESSION['email'] = $teacher['Email'];
+                        $_SESSION['gender'] = $teacher['Gender'];  
+                        $_SESSION['dob'] = $teacher['DatOfBirth'];
+                        $_SESSION['phone'] = $teacher['Contact'];
+                        
+                        $_SESSION['username'] = $username;
+                        $_SESSION['password'] = $password;
+                        header("Location: /Project/View/dashboard.php");
+                        $isValid = true;
+                    }
+                }
+            }
+            if(!$isValid) {
                 header("Location: /ProjectEZ/View/login.php");
                 setcookie('msg', "❌Username or Password incorrect<br><br>", time() + 1, "/");
             }

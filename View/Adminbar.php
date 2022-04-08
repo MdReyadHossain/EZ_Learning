@@ -22,7 +22,6 @@
         <ul>
             <li><a href="/ProjectEZ/View/Dashboard.php"><b> Dashboard</b></a><br><br></li>
             <li><a href="/ProjectEZ/View/Admin.php"><b> Profile</b></a><br><br></li>
-            <li><a href="/ProjectEZ/View/Update.php"><b> Update Admin</b></a><br><br></li>
             <li><a href="/ProjectEZ/View/Teacher.php"><b> Teachers </b></a><br><br></li>
             <li><a href="/ProjectEZ/View/Student.php"><b> Students </b></a><br><br></li>
             <li><a href="/ProjectEZ/View/NnE.php"><b> News and Events</b></a><br><br></li>

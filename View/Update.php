@@ -41,7 +41,7 @@
                     </td>
                     <td>:</td>
                     <td>
-                        <input type="email" name="email" id="email" value="<?php echo $_SESSION['email']; ?>"><?php if(isset($_COOKIE['email'])) {echo $_COOKIE['email'];} ?>
+                        <input type="email" name="email" id="email" value="<?php echo $_SESSION['email']; ?>"><?php if(isset($_COOKIE['emailErr'])) {echo $_COOKIE['emailErr'];} ?>
                     </td>
                 </tr>
                 <tr>
@@ -50,16 +50,16 @@
                     </td>
                     <td>:</td>
                     <td>
-                        <input type="tel" name="phone" id="phone" value="<?php echo $_SESSION['phone']; ?>"><?php if(isset($_COOKIE['phone'])) {echo $_COOKIE['phone'];} ?>
+                        <input type="tel" name="phone" id="phone" value="<?php echo $_SESSION['phone']; ?>"><?php if(isset($_COOKIE['phoneErr'])) {echo $_COOKIE['phoneErr'];} ?>
                     </td>
                 </tr>
                 <tr>
                 <td>
-                    <label for="preadd">Present Address </label> 
+                    <label for="add">Present Address </label> 
                 </td>
                 <td>:</td>
                 <td>
-                    <textarea name="preaddress" id="preadd"><?php echo $_SESSION['preaddress']; ?></textarea> 
+                    <textarea name="address" id="add"><?php echo $_SESSION['address']; ?></textarea> 
                 </td>
             </tr>
             </table>

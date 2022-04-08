@@ -47,12 +47,10 @@
         </form>
         <br>
         <a href="/ProjectEZ/View/NnEdata.php"><p style="text-align: center;">See all</p></a>
-    </fieldset>
-
-    <br>
+    </fieldset> 
     <fieldset style="width: 98%;">
         <?php 
-            include '../View/Footer.php'; 
+            include '../View/Footer.php';
         ?>
     </fieldset>
 </body>
