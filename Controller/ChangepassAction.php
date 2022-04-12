@@ -1,5 +1,14 @@
 <?php 
     session_start();
+
+    $ezl = new mysqli("localhost", "root", "", "ezlearning");
+    if ($ezl->connect_error) {
+        die("Data base Connection failed: " . $ezl->connect_error);
+    }
+
+    $sql = "SELECT * FROM admin";
+    $qry = $ezl->query($sql);
+    $data = $qry->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +53,7 @@
 
                 else if(strlen($password) < 8) {
                     $isValid = false;
-                    $passwordErr = "*Password must be at least 8 characters long";
+                    $passwordErr = "❗Password must be at least 8 characters long";
                 }
 
                 if(empty($conpassword)) {
@@ -54,31 +63,33 @@
 
                 if($password != $conpassword) {
                     $isValid = false;
-                    $passwordErr = "*Password not matched";
+                    $passwordErr = "❌Password not matched";
                 }
 
-                if($curpass != $json[0]->password) {
+                if($curpass != $data['Password']) {
                     $isValid = false;
-                    $passwordErr = "*Password not matched";
+                    $passwordErr = "❌Password not matched";
                 }
 
                 
                 if($isValid and $isChecked){
-                    setcookie('msg', '<b>*Password Changed</b><br>', time() + 1, '/');
+                    setcookie('msg', '<b>✅Password Changed</b><br>', time() + 1, '/');
                     header("location: /ProjectEZ/View/ChangePass.php");
 
-                    $handle = fopen(file, "w");
-                    if($_SESSION['sl'] == $json[$i]->sl){
-                        $json[0]->password = $password;
-                        $_SESSION['password'] = $json[0]->password;
+                    $ezl = new mysqli("localhost", "root", "", "ezlearning");
+
+                    if ($ezl->connect_error) {
+                        die("Data base Connection failed: " . $ezl->connect_error);
                     }
-                    $data = json_encode($json);
-                    fwrite($handle, $data);
-                    fclose($handle);
+
+                    $sql = "UPDATE admin SET Password='$password'";
+                    $qry = $ezl->query($sql);
+
+                    $ezl->close();
                 }
 
                 else if($isEmpty) {
-                    setcookie('msg', '<b>*Input missing</b><br>', time() + 1, '/');
+                    setcookie('msg', '<b>❗Input missing</b><br>', time() + 1, '/');
                     header("location: /ProjectEZ/View/ChangePass.php");
                 }
 

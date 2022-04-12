@@ -17,35 +17,27 @@
     <fieldset style="width: 50%; height: 450px;">
         <legend><b>Teachers</b></legend>
         <?php
-            define("file", "../Model/teacher.json");
-            if (isset($_GET['sl'])) {		
-                $sl = $_GET['sl'];
-                $handle = fopen(file, "r");
-                $fr = fread($handle, filesize(file));
-                $arr1 = json_decode($fr);
-                $fc = fclose($handle);
+            if (isset($_GET['id'])) {		
+                $id = $_GET['id'];
 
-                $handle = fopen(file, "w");
-                $arr2 = array();
-                for ($i = 0; $i < count($arr1); $i++) {
-                    if (+$sl !== $arr1[$i]->sl) {
-                        array_push($arr2, $arr1[$i]);
-                    }
+                $ezl = new mysqli("localhost", "root", "", "ezlearning");
+                if ($ezl->connect_error) {
+                    die("Data base Connection failed: " . $ezl->connect_error);
                 }
 
-                $data = json_encode($arr2);
-                $fw = fwrite($handle, $data);
-                $fc = fclose($handle);
+                $sql = "DELETE FROM teacher WHERE id=$id";
+                $qry = $ezl->query($sql);
+
+                header('location: ../View/Teacher.php');
             }
             else {
                 die("Invalid Request");
             }   
-            echo "Teacher Removed<br>";
+            echo "✅Teacher Removed<br>";
         ?>
         <a href="/ProjectEZ/View/Teacher.php">Go Back</a>
     </fieldset>
     
-
     <fieldset style="width: 98%;">
         <?php include '../View/Footer.php'; ?>
     </fieldset>

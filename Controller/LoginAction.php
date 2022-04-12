@@ -56,15 +56,16 @@
             else if($row2->num_rows > 0) {
                 while($teacher = $row2->fetch_assoc()) {
                     if($teacher['Username'] == $username and $teacher['Password'] == $password) {
-                        $_SESSION['sl'] = $teacher['ID'];
+                        $_SESSION['id'] = $teacher['ID'];
                         $_SESSION['name'] = $teacher['Name'];
                         $_SESSION['email'] = $teacher['Email'];
                         $_SESSION['gender'] = $teacher['Gender'];  
-                        $_SESSION['dob'] = $teacher['DatOfBirth'];
+                        $_SESSION['dob'] = $teacher['DateOfBirth'];
                         $_SESSION['phone'] = $teacher['Contact'];
-                        
+
                         $_SESSION['username'] = $username;
                         $_SESSION['password'] = $password;
+
                         header("Location: /Project/View/dashboard.php");
                         $isValid = true;
                     }

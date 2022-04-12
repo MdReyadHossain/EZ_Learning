@@ -1,5 +1,5 @@
 <?php 
-    session_start();
+    session_start();    
     $firstname = $lastname = $gender = $dob = $religion = $preaddress = $paraddress = $phone = $email = $website = $username = $password = $conpassword = "";
     
     $dobErr = $emailErr = $usernameErr = $passwordErr = $religionErr = "";

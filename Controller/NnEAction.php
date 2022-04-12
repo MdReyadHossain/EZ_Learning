@@ -11,7 +11,7 @@
     </head>
     <body>
         <?php 
-            $date = $news = "";
+            $news = "";
 
             $isValid = true;
             $isChecked = $isEmpty = false;
@@ -25,17 +25,7 @@
                     return $data;
                 }
 
-                $date = test($_POST["date"]);
                 $news = test($_POST["news"]);
-                $year = date("Y") - intval($date);
-
-                if(empty($date)) {
-                    $isValid = false;
-                    $isEmpty = true;
-                }
-                else if ($year < 0) {
-                    $isValid = false;
-                }
 
                 if(empty($news)) {
                     $isValid = false;
@@ -74,13 +64,8 @@
                     header("location: /ProjectEZ/View/NnEdata.php");
                 }
 
-                else if($isEmpty) {
-                    setcookie('msg', '<b>*Required input missing</b><br>', time() + 1, '/');
-                    header("location: /ProjectEZ/View/NnE.php");
-                }
-    
                 else {
-                    setcookie('msg', "<b>*Invalid Date</b>", time() + 1, '/');
+                    setcookie('msg', '<b>❗Required input missing</b><br>', time() + 1, '/');
                     header("location: /ProjectEZ/View/NnE.php");
                 }
             }

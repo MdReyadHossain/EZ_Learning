@@ -14,33 +14,29 @@
         <title>Profile</title>
         <style>
             .edit {
-                width: 10%;
-                margin-top: 0;
-                margin-left: 100%;
-                margin-right: 0;
+                position: absolute;
+                top: 0px;
+                right: 2%;
             }
         </style>
     </head>
     <body>
         <?php include('../View/Adminbar.php') ?>
 
-        <fieldset style="width: 40%; height: 100%; float: left;">
+        <fieldset style="width: 40%; height: 100%; float: left; position: relative;">
             <legend><b>Profile</b></legend>
-            
+            <div class='edit'>
+                <a href="/ProjectEZ/View/Update.php">EDIT</a>
+            </div>
             <br>
             <table>
                 <tr>
                     <td>
-                        <label for="fname">Institute Name </label>
+                        <label for="name">Institute Name </label>
                     </td>
                     <td>:</td>
                     <td>
                         <?php echo $_SESSION['name']; ?>
-                    </td>
-                    <td rowspan="4">
-                        <div class='edit'>
-                            <a href="/ProjectEZ/View/Update.php">EDIT</a>
-                        </div>
                     </td>
                 </tr>
                 <tr><td></td></tr>

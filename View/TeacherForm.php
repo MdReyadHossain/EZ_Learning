@@ -29,20 +29,11 @@
                 <table>
                     <tr>
                         <td>
-                            <label for="fname">First Name </label>
+                            <label for="name">Name </label>
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="text" name="firstname" id="fname"> <span class="error">*</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="lname">Last Name </label>
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <input type="text" name="lastname" id="lname"> <span class="error">*</span>
+                            <input type="text" name="name" id="name"> <span class="error">*</span>
                         </td>
                     </tr>
                     <tr>
@@ -51,9 +42,9 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="radio" name="gender" value="male" id="male"> <label for="male">Male</label> 
-                            <input type="radio" name="gender" value="female" id="female"> <label for="female">Female</label>
-                            <input type="radio" name="gender" value="other" id="other"> <label for="other">Others</label>
+                            <input type="radio" name="gender" value="Male" id="male"> <label for="male">Male</label> 
+                            <input type="radio" name="gender" value="Memale" id="female"> <label for="female">Female</label>
+                            <input type="radio" name="gender" value="Other" id="other"> <label for="other">Others</label>
                             <span class="error">*</span>
                         </td>
                     </tr>
@@ -68,40 +59,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="rel">Religion </label>
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <select name="religion" id="rel"> 
-                                <option value="none">None</option>
-                                <option value="islam">Islam</option>
-                                <option value="hindu">Hindu</option>
-                                <option value="christian">Christian</option>
-                                <option value="other">Other</option>
-                            </select> <span class="error">*<?php if(isset($_COOKIE['rel'])) {echo $_COOKIE['rel'];} ?></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="preadd">Present Address </label> 
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <textarea name="preaddress" id="preadd" placeholder="Enter address.."></textarea> <span class="error">*</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="paradd">Permanent Address </label>
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <textarea name="paraddress" id="paradd" placeholder="Enter address.."></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="phone">Phone No. </label>
+                            <label for="phone">Contact No. </label>
                         </td>
                         <td>:</td>
                         <td>
@@ -115,15 +73,6 @@
                         <td>:</td>
                         <td>
                             <input type="email" name="email" id="email"> <span class="error">*<?php if(isset($_COOKIE['email'])) {echo $_COOKIE['email'];} ?></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="web">Website </label>
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <input type="url" name="website" id="web">
                         </td>
                     </tr>
                 </table>

@@ -49,13 +49,26 @@
                             echo "<td>" . $data['Email'] . "</td>";
                             echo "<td>" . $data['PhoneNo'] . "</td>";
                             echo "<td>" . $data['Username'] . "</td>";
-                            echo "<td>" . "<a href='/ProjectEZ/Controller/DeleteActionStudent.php?sl='>Delete</a></td></tr>";
+                            echo "<td>" . "<a href='/ProjectEZ/Controller/DeleteActionStudent.php?id=" . $data['ID'] . "'>Delete</a></td>";
+                            echo "</tr>";
                         }
+                    }
+                    else {
+                        echo "<tr>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "</tr>";
                     }
                 ?>
             </tbody>
         </table>
-        <a href="/ProjectEZ/View/Registration.php"><p style="text-align: center;">Add a Student</p></a>
+        <p style="text-align: center;"><a href="/ProjectEZ/View/Registration.php">Add a Student</a></p>
     </fieldset>
     <br>
     <fieldset style="width: 98%;">

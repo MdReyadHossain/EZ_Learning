@@ -27,13 +27,6 @@
             <table>
                 <tr>
                     <td>
-                        <label for="date">Date: </label>
-                        <input type="date" name="date" id="date">
-                    </td>
-                </tr>
-                <tr><td><br></td></tr>
-                <tr>
-                    <td>
                         <label for="news">Write a News or Events:</label>
                     </td>
                 </tr>

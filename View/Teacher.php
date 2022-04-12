@@ -23,6 +23,7 @@
 </head>
 <body>
     <?php include('../View/Adminbar.php') ?>
+    
     <fieldset style="width: 55%; height: 450px; overflow: scroll;">
         <legend><b>Teachers</b></legend>
         <h3 align="center">Teachers Information</h3>
@@ -42,22 +43,36 @@
                     if ($qry->num_rows > 0) {
                         while ($data = $qry->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td> 101-" . $id = $data['ID'] . "</td>";
+                            echo "<td> 101-" . $data['ID'] . "</td>";
                             echo "<td>" . $data['Name'] . "</td>";
                             echo "<td>" . $data['Gender'] . "</td>";
                             echo "<td>" . $data['DateOfBirth'] . "</td>";
                             echo "<td>" . $data['Email'] . "</td>";
                             echo "<td>" . $data['Contact'] . "</td>";
                             echo "<td>" . $data['Username'] . "</td>";
-                            echo "<td>" . "<a href='/ProjectEZ/View/EditTeacher.php?id=$id'>Edit</a></td>";
-                            echo "<td>" . "<a href='/ProjectEZ/Controller/DeleteActionTeacher.php'>Delete</a></td>";
+                            echo "<td><a href='/ProjectEZ/View/EditTeacher.php?id=" . $data['ID'] ."'>Edit</a></td>";  
+                            echo "<td><a href='/ProjectEZ/Controller/DeleteActionTeacher.php?id=" . $data['ID'] ."'>Delete</a></td>";
+                            echo "</tr>";
                         }
+                    }
+                    else {
+                        echo "<tr>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "<td>--</td>";
+                        echo "</tr>";
                     }
                     $ezl->close();
                 ?>
             </tbody>
         </table>
-        <a href="/Project/View/registration.php"><p style="text-align: center;">Add a Teacher</p></a>
+        <p style="text-align: center;"><a href="../View/TeacherForm.php">Add a Teacher</a> | <a href="/ProjectEZ/View/TeacherReq.php">Teacher Requests</a></p>
     </fieldset>
     <br>
     <fieldset style="width: 98%;">

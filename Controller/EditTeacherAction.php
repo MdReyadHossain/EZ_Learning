@@ -11,7 +11,7 @@
     </head>
     <body>
         <?php 
-            $firstname = $lastname = $gender = $dob = $religion = $preaddress = $paraddress = $phone = $email = $website = $username = $password = $conpassword = "";
+            $id = $name = $gender = $dob = $phone = $email = $username = "";
             
             $dobErr = $emailErr = $usernameErr = $passwordErr = $religionErr = "";
 
@@ -27,25 +27,15 @@
                     return $data;
                 }
 
-                $sl = test($_POST["sl"]);
-                $firstname = test($_POST["firstname"]);
-                $lastname = test($_POST["lastname"]);
+                $id = test($_POST["id"]);
+                $name = test($_POST["name"]);
                 $dob = test($_POST["dob"]);
-                $religion = test($_POST["religion"]);
-                $preaddress = test($_POST["preaddress"]);
-                $paraddress = test($_POST["paraddress"]);
                 $phone = test($_POST["phone"]);
                 $email = test($_POST["email"]);
-                $website = test($_POST["website"]);
                 $username = test($_POST["username"]);
                 $year = date("Y") - intval($dob);
 
-                if(empty($firstname)) {
-                    $isValid = false;
-                    $isEmpty = true;
-                }
-
-                if(empty($lastname)) {
+                if(empty($name)) {
                     $isValid = false;
                     $isEmpty = true;
                 }
@@ -59,20 +49,16 @@
 
                 if(empty($dob)) {
                     $isValid = false;
+                    $isEmpty = true;
                 }
 
                 else if ($year < 18) {
                     $isValid = false;
-                    $dobErr = "<br>*You are not old enough, Must be 18 or older";
+                    $dobErr = "<br>❌You are not old enough, Must be 18 or older";
                 }
                 if($religion == "none") {
                     $isValid = false;
-                    $religionErr = "<br>*Please select your religion";
-                }
-
-                if(empty($preaddress)) {
-                    $isValid = false;
-                    $isEmpty = true;
+                    $religionErr = "<br>❗Please select your religion";
                 }
 
                 if(empty($email)) {
@@ -82,7 +68,7 @@
 
                 else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $isValid = false;
-                    $emailErr = "<br>*Invalid email format";
+                    $emailErr = "<br>❌Invalid email format";
                 }
 
                 if(empty($username)) {
@@ -92,43 +78,26 @@
 
                 if(strlen($username) > 8) {
                     $isValid = false;
-                    $usernameErr = "<br>Username up to 8 characters long";
+                    $usernameErr = "<br>❗Username up to 8 characters long";
                 }
 
                 if($isValid and $isChecked){
                     // data insertion
-                    define("file", '../Model/teacher.json');
-                    $handle = fopen(file, "r");
-                    $fr = fread($handle, filesize(file));
-                    $json = json_decode($fr);
-                    fclose($handle);
-                    
-                    $handle = fopen(file, "w");
-                    for ($i = 0; $i < count($json); $i++) {
-                        if (+$sl === $json[$i]->sl) {
-                            $json[$i]->fname = $firstname;
-                            $json[$i]->lname = $lastname;
-                            $json[$i]->gender = $gender;
-                            $json[$i]->dob = $dob;
-                            $json[$i]->religion = $religion;
-                            $json[$i]->preaddress = $preaddress;
-                            $json[$i]->paraddress = $paraddress;
-                            $json[$i]->phone = $phone;
-                            $json[$i]->email = $email;
-                            $json[$i]->website = $website;
-                            $json[$i]->username = $username;
-                        }
+                    $ezl = new mysqli("localhost", "root", "", "ezlearning");
+
+                    if ($ezl->connect_error) {
+                        die("Data base Connection failed: " . $ezl->connect_error);
                     }
-    
-                    $data = json_encode($json);
-                    fwrite($handle, $data);
-                    fclose($handle);
+
+                    $sql = "UPDATE teacher SET Name='$name', Email='$email', Gender='$gender', DateOfBirth='$dob', Contact='$phone', Username='$username' WHERE ID=$id";
+                    $qry = $ezl->query($sql);
+
                     header("location: /ProjectEZ/View/Teacher.php");
                 }
 
                 else if ($isEmpty) {
-                    setcookie('msg', '<b>*Required input missing</b><br>', time() + 1, '/');
-                    header("location: /ProjectEZ/View/EditTeacher.php");
+                    setcookie('msg', '<b>❗Required input missing</b><br>', time() + 1, '/');
+                    header("location: /ProjectEZ/View/EditTeacher.php?id=$id");
                 }
     
                 else {
@@ -136,13 +105,9 @@
                         setcookie('dob', $dobErr, time() + 1, '/');
                     if($emailErr != NULL)
                         setcookie('email', $emailErr, time() + 1, '/');
-                    if($religionErr != NULL)
-                        setcookie('rel', $religionErr, time() + 1, '/');
                     if($usernameErr != NULL)
                         setcookie('user', $usernameErr, time() + 1, '/');
-                    if($passwordErr != NULL)
-                        setcookie('pass', $passwordErr, time() + 1, '/');
-                    header("location: /ProjectEZ/View/EditTeacher.php");
+                    header("location: /ProjectEZ/View/EditTeacher.php?id=$id");
                 }
             }
         ?>

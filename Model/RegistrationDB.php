@@ -1,5 +1,4 @@
-<?php 
-    require_once '../Controller/RegistrationAction.php';
+<?php
     // data insertion
     $server = "localhost";
     $db_user = "root";

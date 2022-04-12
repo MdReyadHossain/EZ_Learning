@@ -3,6 +3,14 @@
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
+    $ezl = new mysqli("localhost", "root", "", "ezlearning");
+
+    if ($ezl->connect_error) {
+        die("Data base Connection failed: " . $ezl->connect_error);
+    }
+
+    $sql = "SELECT * FROM teacher";
+    $qry = $ezl->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -15,28 +23,19 @@
     </head>
     <body>
         <?php
-            define("file", "../Model/teacher.json");
-            $sl = $firstname = $lastname = $gender = $dob = $religion = $preaddress = $paraddress = $phone = $email = $website = $username = "";
-            if (isset($_GET['sl'])) {		
-                $sl = $_GET['sl'];
-                $handle = fopen(file, "r");
-                $fr = fread($handle, filesize(file));
-                $arr1 = json_decode($fr);
-                $fc = fclose($handle);
-
-                for ($i = 0; $i < count($arr1); $i++) {
-                    if (+$sl === $arr1[$i]->sl) {
-                        $firstname = $arr1[$i]->fname;
-                        $lastname = $arr1[$i]->lname;
-                        $gender = $arr1[$i]->gender;
-                        $dob = $arr1[$i]->dob;
-                        $religion = $arr1[$i]->religion;
-                        $preaddress = $arr1[$i]->preaddress;
-                        $paraddress = $arr1[$i]->paraddress;
-                        $phone = $arr1[$i]->phone;
-                        $email = $arr1[$i]->email;
-                        $website = $arr1[$i]->website;
-                        $username = $arr1[$i]->username;
+            $id = $name = $gender = $dob = $phone = $email = $username = "";
+            if (isset($_GET['id'])) {		
+                $id = $_GET['id'];
+                if($qry->num_rows > 0) {
+                    while ($data = $qry->fetch_assoc()) {
+                        if (+$id == $data['ID']) {
+                            $name = $data['Name'];
+                            $gender = $data['Gender'];
+                            $dob = $data['DateOfBirth'];
+                            $phone = $data['Contact'];
+                            $email = $data['Email'];
+                            $username = $data['Username'];
+                        }
                     }
                 }
             }
@@ -50,24 +49,20 @@
             <legend><b>Teachers Profile</b></legend>
             <br>
             <form action="/ProjectEZ/Controller/EditTeacherAction.php" method="POST">
-                <input type="number" name="sl" value="<?php echo $sl; ?>" hidden>
+                <?php 
+                    if(isset($_COOKIE['msg'])){
+                        echo $_COOKIE['msg'];
+                    }
+                ?>
+                <input type="number" name="id" value="<?php echo $id; ?>" hidden>
                 <table>
                     <tr>
                         <td>
-                            <label for="fname">First Name </label>
+                            <label for="name">Name </label>
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="text" name="firstname" id="fname" value="<?php echo $firstname; ?>">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="lname">Last Name </label>
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <input type="text" name="lastname" id="lname" value="<?php echo $lastname; ?>">
+                            <input type="text" name="name" id="name" value="<?php echo $name; ?>">
                         </td>
                     </tr>
                     <tr>
@@ -76,9 +71,9 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input <?php if($gender == 'male') {echo 'checked="checked"';} ?> type="radio" name="gender" value="male" id="male"> <label for="male">Male</label> 
-                            <input <?php if($gender == 'female') {echo 'checked="checked"';} ?> type="radio" name="gender" value="female" id="female"> <label for="female">Female</label>
-                            <input <?php if($gender == 'other') {echo 'checked="checked"';} ?> type="radio" name="gender" value="other" id="other"> <label for="other">Others</label>
+                            <input <?php if($gender == 'Male') {echo 'checked="checked"';} ?> type="radio" name="gender" value="Male" id="male"> <label for="male">Male</label> 
+                            <input <?php if($gender == 'Female') {echo 'checked="checked"';} ?> type="radio" name="gender" value="Female" id="female"> <label for="female">Female</label>
+                            <input <?php if($gender == 'Other') {echo 'checked="checked"';} ?> type="radio" name="gender" value="Other" id="other"> <label for="other">Others</label>
                         </td>
                     </tr>
                     <tr>
@@ -88,38 +83,7 @@
                         <td>:</td>
                         <td>
                             <input type="date" name="dob" id="dob" value="<?php echo $dob; ?>">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="rel">Religion </label>
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <select name="religion" id="rel"> 
-                                <option <?php if($religion == 'islam'){echo 'selected';} ?> value="islam">Islam</option>
-                                <option <?php if($religion == 'hindu'){echo 'selected';} ?> value="hindu">Hindu</option>
-                                <option <?php if($religion == 'christian'){echo 'selected';} ?> value="christian">Christian</option>
-                                <option <?php if($religion == 'other'){echo 'selected';} ?> value="other">Other</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="preadd">Present Address </label> 
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <textarea name="preaddress" id="preadd"><?php echo $preaddress; ?></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="paradd">Parmanent Address </label>
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <textarea name="paraddress" id="paradd"><?php echo $paraddress; ?></textarea>
+                            <?php if(isset($_COOKIE['dob'])){echo $_COOKIE['dob'];} ?>
                         </td>
                     </tr>
                     <tr>
@@ -138,15 +102,6 @@
                         <td>:</td>
                         <td>
                             <input type="email" name="email" id="email" value="<?php echo $email; ?>">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="web">Website </label>
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <input type="url" name="website" id="web" value="<?php echo $website; ?>">
                         </td>
                     </tr>
                     <tr>

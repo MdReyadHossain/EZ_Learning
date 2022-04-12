@@ -17,30 +17,29 @@
     <fieldset style="width: 50%; height: 450px;">
         <legend><b>Teachers</b></legend>
         <?php
-            define("file", "../Model/query.json");
-            if (isset($_GET['sl'])) {		
-                $sl = $_GET['sl'];
-                $handle = fopen(file, "r");
-                $fr = fread($handle, filesize(file));
-                $arr1 = json_decode($fr);
-                $fc = fclose($handle);
+            if (isset($_GET['id'])) {		
+                $id = $_GET['id'];
 
-                $handle = fopen(file, "w");
-                $arr2 = array();
-                for ($i = 0; $i < count($arr1); $i++) {
-                    if (+$sl !== $arr1[$i]->sl) {
-                        array_push($arr2, $arr1[$i]);
-                    }
+                $ezl = new mysqli("localhost", "root", "", "ezlearning");
+                if ($ezl->connect_error) {
+                    die("Data base Connection failed: " . $ezl->connect_error);
                 }
 
-                $data = json_encode($arr2);
-                $fw = fwrite($handle, $data);
-                $fc = fclose($handle);
+                $sql = "SELECT * FROM query";
+                $result = $ezl->query($sql);
+
+                while ($data = $result->fetch_assoc()) {
+                    if (+$id == $data['ID']) {
+                        $sql1 = "UPDATE query SET Solve='yes' WHERE ID = $id";
+                        $result1 = $ezl->query($sql1);
+                    }
+                }
+                header('location: ../View/Query.php');
             }
             else {
                 die("Invalid Request");
             }   
-            echo "<h3>Query Solved</h3>";
+            echo "<h3>✅Query Solved</h3>";
         ?>
         <a href="/ProjectEZ/View/Query.php">Go Back</a>
     </fieldset>

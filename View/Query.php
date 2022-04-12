@@ -4,11 +4,13 @@
         header("Location: /ProjectEZ/View/login.php");
     }
 
-    define("file", "../Model/query.json");
-    $handle = fopen(file, "r");
-    $fr = fread($handle, filesize(file));
-    $arr1 = json_decode($fr);
-    fclose($handle);
+    $ezl = new mysqli("localhost", "root", "", "ezlearning");
+    if ($ezl->connect_error) {
+        die("Data base Connection failed: " . $ezl->connect_error);
+    }
+
+    $sql = "SELECT * FROM query";
+    $result = $ezl->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,16 +35,28 @@
                     <th>Action</th>
                 </tr>
                 <?php 
-                    if ($arr1 === NULL) {}
-                    else {
-                        for ($i = 0; $i < count($arr1); $i++) {
+                    if ($result->num_rows > 0) {
+                        while ($data = $result->fetch_assoc()) {
                             echo "<tr>";
-                                echo "<td> 100-" . $arr1[$i]->sl . "</td>";
-                                echo "<td>" . $arr1[$i]->fname . " " . $arr1[$i]->lname . "</td>";
-                                echo "<td>" . $arr1[$i]->query . "</td>";
-                                echo "<td>" . "<a href='/ProjectEZ/View/QueryDone.php?sl=" . $arr1[$i]->sl . "'>Done</a></td>";
+                                echo "<td> 100-" . $data['ID'] . "</td>";
+                                echo "<td>" . $data['Name'] . "</td>";
+                                echo "<td>" . $data['Query'] . "</td>";
+                                if ($data['Solve'] == 'no') {
+                                    echo "<td>" . "<a href='/ProjectEZ/View/QueryDone.php?id=" . $data['ID'] . "'>Done</a></td>";
+                                }
+                                else {
+                                    echo "<td>✅Solved</td>";
+                                }
                             echo "</tr>";
                         }
+                    }
+                    else {
+                        echo "<tr>";
+                                echo "<td>--</td>";
+                                echo "<td>--</td>";
+                                echo "<td>--</td>";
+                                echo "<td>--</td>";
+                            echo "</tr>";
                     }
                 ?>
             </tbody>

@@ -11,7 +11,7 @@
     </head>
     <body>
         <?php 
-            $firstname = $lastname = $gender = $dob = $religion = $preaddress = $paraddress = $phone = $email = $website = $username = $password = $conpassword = "";
+            $name = $gender = $dob = $phone = $email = $website = $username = $password = $conpassword = "";
             
             $dobErr = $emailErr = $usernameErr = $passwordErr = $religionErr = "";
 
@@ -27,26 +27,16 @@
                     return $data;
                 }
 
-                $firstname = test($_POST["firstname"]);
-                $lastname = test($_POST["lastname"]);
+                $name = test($_POST["name"]);
                 $dob = test($_POST["dob"]);
-                $religion = test($_POST["religion"]);
-                $preaddress = test($_POST["preaddress"]);
-                $paraddress = test($_POST["paraddress"]);
                 $phone = test($_POST["phone"]);
                 $email = test($_POST["email"]);
-                $website = test($_POST["website"]);
                 $username = test($_POST["username"]);
                 $password = test($_POST["password"]);
                 $conpassword = test($_POST["conpassword"]);
                 $year = date("Y") - intval($dob);
 
-                if(empty($firstname)) {
-                    $isValid = false;
-                    $isEmpty = true;
-                }
-
-                if(empty($lastname)) {
+                if(empty($name)) {
                     $isValid = false;
                     $isEmpty = true;
                 }
@@ -66,15 +56,6 @@
                     $isValid = false;
                     $dobErr = "<br>*You are not old enough, Must be 18 or older";
                 }
-                if($religion == "none") {
-                    $isValid = false;
-                    $religionErr = "<br>*Please select your religion";
-                }
-
-                if(empty($preaddress)) {
-                    $isValid = false;
-                    $isEmpty = true;
-                }
 
                 if(empty($email)) {
                     $isValid = false;
@@ -93,7 +74,7 @@
 
                 if(strlen($username) > 8) {
                     $isValid = false;
-                    $usernameErr = "<br>Username up to 8 characters long";
+                    $usernameErr = "<br>❌Username up to 8 characters long";
                 }
 
                 if(empty($password)) {
@@ -103,7 +84,7 @@
 
                 else if(strlen($password) < 8) {
                     $isValid = false;
-                    $passwordErr = "<br>Password must be at least 8 characters long";
+                    $passwordErr = "<br>❌Password must be at least 8 characters long";
                 }
 
                 if(empty($conpassword)) {
@@ -113,64 +94,37 @@
 
                 if($password != $conpassword) {
                     $isValid = false;
-                    $passwordErr = "<br>Password not matched";
+                    $passwordErr = "<br>❌Password not matched";
                 }
-
                 
                 if($isValid and $isChecked){
                     // data insertion
-                    define("file", '../Model/teacher.json');
-                    $handle = fopen(file, "r");
-                    $json = NULL;
+                    $server = "localhost";
+                    $db_user = "root";
+                    $db_pass = "";
+                    $dbname = "ezlearning";
+                    $ezl = new mysqli($server, $db_user, $db_pass, $dbname);
 
-                    if(filesize(file) > 0) {
-                        $fr = fread($handle, filesize(file));
-                        $json = json_decode($fr);
-                        fclose($handle);
+                    if ($ezl->connect_error) {
+                        die("Data base Connection failed: " . $ezl->connect_error);
                     }
                     
-                    $handle = fopen(file, "w");
-                    if($json == NULL){
-                        $sl = 1;
-                        $data = array(array("sl" => $sl,
-                                            "fname" => $firstname, 
-                                            "lname" => $lastname,
-                                            "gender" => $gender,
-                                            "dob" => $dob,
-                                            "religion" => $religion,
-                                            "preaddress" => $preaddress,
-                                            "paraddress" => $paraddress,
-                                            "phone" => $phone,
-                                            "email" => $email,
-                                            "website" => $website,
-                                            "username" => $username,
-                                            "password" => $password));
-                        $data = json_encode($data);
+                    $sql = "INSERT INTO teacher(Name, Gender, DateOfBirth, Email, Contact, Username, Password) VALUES ('$name', '$gender', '$dob', '$email', '$phone', '$username', '$password')";
+
+                    if($ezl->query($sql)) {
+                        header("location: /ProjectEZ/View/login.php");
+                        setcookie('msg', '<b>✅ Registration Successful</b>', time() + 1, '/');
                     }
                     else {
-                        $sl = $json[count($json)-1]->sl;
-                        $json[] = array("sl" => $sl + 1,
-                                        "fname" => $firstname, 
-                                        "lname" => $lastname,
-                                        "gender" => $gender,
-                                        "dob" => $dob,
-                                        "religion" => $religion,
-                                        "preaddress" => $preaddress,
-                                        "paraddress" => $paraddress,
-                                        "phone" => $phone,
-                                        "email" => $email,
-                                        "website" => $website,
-                                        "username" => $username,
-                                        "password" => $password);
-                        $data = json_encode($json);
+                        echo "Error: " . $sql . "<br>" . $ezl->error;
                     }
-                    fwrite($handle, $data);
-                    fclose($handle);
+
+                    $ezl->close();
                     header("location: /ProjectEZ/View/Teacher.php");
                 }
 
                 else if ($isEmpty) {
-                    setcookie('msg', '<b>*Required input missing</b><br>', time() + 1, '/');
+                    setcookie('msg', '<b>❗Required input missing</b><br>', time() + 1, '/');
                     header("location: /ProjectEZ/View/TeacherForm.php");
                 }
     
