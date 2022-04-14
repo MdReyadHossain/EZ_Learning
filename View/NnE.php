@@ -19,10 +19,10 @@
         <legend><b>News And Events</b></legend>
         <br>
         <form action="/ProjectEZ/Controller/NnEAction.php"  method="POST">
-            <?php 
+            <?php
                 if(isset($_COOKIE['msg'])) {
                     echo $_COOKIE['msg'];
-                }    
+                }
             ?>
             <table>
                 <tr>

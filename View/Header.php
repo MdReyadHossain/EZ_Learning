@@ -7,6 +7,6 @@
         <title>Header</title>
     </head>
     <body>
-        <a href="/ProjectEZ/Home.php"><img src="/ProjectEZ/Model/EZlogo.png" alt="EZ learning logo" height="80em" width="100em"></a>
-    </body> 
+        <a href="/ProjectEZ/Home.php"><img src="/ProjectEZ/View/img/EZlogo.png" alt="EZ learning logo" height="100em" width="100em"></a>
+    </body>
 </html>
