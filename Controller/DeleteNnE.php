@@ -3,6 +3,8 @@
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
+
+    require '../Model/AdminDB.php';
 ?>
 
 <!DOCTYPE html>
@@ -18,29 +20,16 @@
         <legend><b>News and Events</b></legend>
         <?php
             define("file", "../Model/news.json");
-            if (isset($_GET['no'])) {		
-                $no = $_GET['no'];
-                $handle = fopen(file, "r");
-                $fr = fread($handle, filesize(file));
-                $arr1 = json_decode($fr);
-                $fc = fclose($handle);
+            if (isset($_GET['id'])) {		
+                $id = $_GET['id'];  
 
-                $handle = fopen(file, "w");
-                $arr2 = array();
-                for ($i = 0; $i < count($arr1); $i++) {
-                    if (+$no !== $arr1[$i]->no) {
-                        array_push($arr2, $arr1[$i]);
-                    }
-                }
-
-                $data = json_encode($arr2);
-                $fw = fwrite($handle, $data);
-                $fc = fclose($handle);
+                delete($id);    
+                header('location: ../View/NnEdata.php');
             }
             else {
                 die("Invalid Request");
             }   
-            echo "<h3>Notice Removed</h3><br>";
+            echo "<h3>✅Notice Removed</h3><br>";
         ?>
         <a href="/ProjectEZ/View/NnEdata.php">Go Back</a>
     </fieldset>

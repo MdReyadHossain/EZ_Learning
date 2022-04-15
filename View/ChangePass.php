@@ -3,12 +3,6 @@
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
-
-    define("file", "../Model/user.json");
-    $handle = fopen(file, "r");
-    $fr = fread($handle, filesize(file));
-    $json = json_decode($fr);
-    fclose($handle);
 ?>
 
 <!DOCTYPE html>

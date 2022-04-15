@@ -1,5 +1,7 @@
 <?php 
     session_start();
+
+    require '../Model/TeacherDB.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,17 +84,7 @@
                 }
 
                 if($isValid and $isChecked){
-                    // data insertion
-                    $ezl = new mysqli("localhost", "root", "", "ezlearning");
-
-                    if ($ezl->connect_error) {
-                        die("Data base Connection failed: " . $ezl->connect_error);
-                    }
-
-                    $sql = "UPDATE teacher SET Name='$name', Email='$email', Gender='$gender', DateOfBirth='$dob', Contact='$phone', Username='$username' WHERE ID=$id";
-                    $qry = $ezl->query($sql);
-
-                    header("location: /ProjectEZ/View/Teacher.php");
+                    edit($id, $name, $gender, $dob, $phone, $email, $username);
                 }
 
                 else if ($isEmpty) {

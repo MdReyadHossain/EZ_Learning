@@ -1,24 +1,36 @@
 <?php
-    // data insertion
-    $server = "localhost";
-    $db_user = "root";
-    $db_pass = "";
-    $dbname = "ezlearning";
-    $ezl = new mysqli($server, $db_user, $db_pass, $dbname);
+    require 'Connect.php';
 
-    if ($ezl->connect_error) {
-        die("Data base Connection failed: " . $ezl->connect_error);
+    function insert_student($firstname, $lastname, $gender, $dob, $religion, $preaddress, $paraddress, $phone, $email, $username, $password) {
+        $ezl = connect();
+
+        $sql = "INSERT INTO student(FirstName, LastName, Gender, DateOfBirth, Religion, PresentAddress, PermanentAddress, PhoneNo, Email, Username, Password) VALUES ('$firstname', '$lastname', '$gender', '$dob', '$religion', '$preaddress', '$paraddress', '$phone', '$email', '$username', '$password')";
+
+        if($ezl->query($sql)) {
+            header("location: /ProjectEZ/View/login.php");
+            setcookie('msg', '<b>✅ Registration Successful</b>', time() + 1, '/');
+        }
+        else {
+            echo "Error: " . $sql . "<br>" . $ezl->error;
+        }
+
+        $ezl->close();
     }
     
-    $sql = "INSERT INTO student(FirstName, LastName, Gender, DateOfBirth, Religion, PresentAddress, PermanentAddress, PhoneNo, Email, Username, Password) VALUES ('$firstname', '$lastname', '$gender', '$dob', '$religion', '$preaddress', '$paraddress', $phone, '$email', '$username', '$password')";
+    function insert_teacher($name, $gender, $dob, $phone, $email, $username, $password) {
+        $ezl = connect();
 
-    if($ezl->query($sql)) {
-        header("location: /ProjectEZ/View/login.php");
-        setcookie('msg', '<b>✅ Registration Successful</b>', time() + 1, '/');
-    }
-    else {
-        echo "Error: " . $sql . "<br>" . $ezl->error;
-    }
+        $sql = "INSERT INTO teacher(Name, Gender, DateOfBirth, Email, Contact, Username, Password) VALUES ('$name', '$gender', '$dob', '$email', '$phone', '$username', '$password')";
 
-    $ezl->close();
+        if($ezl->query($sql)) {
+            header("location: /ProjectEZ/View/Teacher.php");
+            setcookie('msg', '<b>✅ Registration Successful</b>', time() + 1, '/');
+        }
+        else {
+            echo "Error: " . $sql . "<br>" . $ezl->error;
+        }
+
+        $ezl->close();
+        header("location: /ProjectEZ/View/Teacher.php");
+    }
 ?>

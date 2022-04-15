@@ -23,7 +23,7 @@
 <body>
     <?php include('../View/Adminbar.php') ?>
 
-    <fieldset style="width: 60%; height: 450px; float: left;">
+    <fieldset style="width: 60%; height: 450px; float: left; overflow: scroll;">
         <legend><b>Query</b></legend>
         <table border="1" align="center">
             <br>
@@ -38,7 +38,7 @@
                     if ($result->num_rows > 0) {
                         while ($data = $result->fetch_assoc()) {
                             echo "<tr>";
-                                echo "<td> 100-" . $data['ID'] . "</td>";
+                                echo "<td> 101-" . $data['ID'] . "</td>";
                                 echo "<td>" . $data['Name'] . "</td>";
                                 echo "<td>" . $data['Query'] . "</td>";
                                 if ($data['Solve'] == 'no') {

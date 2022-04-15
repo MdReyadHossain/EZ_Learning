@@ -36,7 +36,6 @@
             $row1 = $ezl->query($sql1);
             $row2 = $ezl->query($sql2);
             $admin = $row1->fetch_assoc();
-            $cnt = 0;
                         
             if($admin['Username'] == $username and $admin['Password'] == $password) {
                 $_SESSION['name'] = $admin['InstituteName'];

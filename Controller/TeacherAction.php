@@ -1,5 +1,6 @@
 <?php
     session_start();
+    require '../Model/RegistrationDB.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +12,7 @@
     </head>
     <body>
         <?php 
-            $name = $gender = $dob = $phone = $email = $website = $username = $password = $conpassword = "";
+            $name = $gender = $dob = $phone = $email = $username = $password = $conpassword = "";
             
             $dobErr = $emailErr = $usernameErr = $passwordErr = $religionErr = "";
 
@@ -98,29 +99,7 @@
                 }
                 
                 if($isValid and $isChecked){
-                    // data insertion
-                    $server = "localhost";
-                    $db_user = "root";
-                    $db_pass = "";
-                    $dbname = "ezlearning";
-                    $ezl = new mysqli($server, $db_user, $db_pass, $dbname);
-
-                    if ($ezl->connect_error) {
-                        die("Data base Connection failed: " . $ezl->connect_error);
-                    }
-                    
-                    $sql = "INSERT INTO teacher(Name, Gender, DateOfBirth, Email, Contact, Username, Password) VALUES ('$name', '$gender', '$dob', '$email', '$phone', '$username', '$password')";
-
-                    if($ezl->query($sql)) {
-                        header("location: /ProjectEZ/View/login.php");
-                        setcookie('msg', '<b>✅ Registration Successful</b>', time() + 1, '/');
-                    }
-                    else {
-                        echo "Error: " . $sql . "<br>" . $ezl->error;
-                    }
-
-                    $ezl->close();
-                    header("location: /ProjectEZ/View/Teacher.php");
+                    insert_teacher($name, $gender, $dob, $phone, $email, $username, $password);
                 }
 
                 else if ($isEmpty) {

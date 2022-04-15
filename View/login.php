@@ -1,7 +1,10 @@
 <?php
     session_start();
     if(isset($_SESSION['username'])) {
-        header("Location: /ProjectEZ/View/Admin.php");
+        if($_SESSION['username'] == 'admin')
+            header("Location: /ProjectEZ/View/Admin.php");
+        else 
+        header("Location: /Project/View/dashboard.php");
     }
 ?>
 

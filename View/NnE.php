@@ -27,6 +27,11 @@
             <table>
                 <tr>
                     <td>
+                        <input type="date" name="date" value="<?php echo date('Y-m-d') ?>" hidden>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <label for="news">Write a News or Events:</label>
                     </td>
                 </tr>

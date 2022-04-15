@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    require '../Model/AdminDB.php';
 
     $ezl = new mysqli("localhost", "root", "", "ezlearning");
     if ($ezl->connect_error) {
@@ -10,6 +11,7 @@
     $qry = $ezl->query($sql);
     $data = $qry->fetch_assoc();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -76,16 +78,7 @@
                     setcookie('msg', '<b>✅Password Changed</b><br>', time() + 1, '/');
                     header("location: /ProjectEZ/View/ChangePass.php");
 
-                    $ezl = new mysqli("localhost", "root", "", "ezlearning");
-
-                    if ($ezl->connect_error) {
-                        die("Data base Connection failed: " . $ezl->connect_error);
-                    }
-
-                    $sql = "UPDATE admin SET Password='$password'";
-                    $qry = $ezl->query($sql);
-
-                    $ezl->close();
+                    chng_password($password);
                 }
 
                 else if($isEmpty) {

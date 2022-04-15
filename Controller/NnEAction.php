@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    require '../Model/AdminDB.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +12,7 @@
     </head>
     <body>
         <?php 
-            $news = "";
+            $news = $date = "";
 
             $isValid = true;
             $isChecked = $isEmpty = false;
@@ -26,6 +27,7 @@
                 }
 
                 $news = test($_POST["news"]);
+                $date = test($_POST["date"]);
 
                 if(empty($news)) {
                     $isValid = false;
@@ -34,33 +36,7 @@
 
                 if($isValid and $isChecked){
                     // data insertion
-                    define("file", '../Model/news.json');
-                    $handle = fopen(file, "r");
-                    $json = NULL;
-
-                    if(filesize(file) > 0) {
-                        $fr = fread($handle, filesize(file));
-                        $json = json_decode($fr);
-                        fclose($handle);
-                    }
-                    
-                    $handle = fopen(file, "w");
-                    if($json == NULL){
-                        $no = 1;
-                        $data = array(array("no" => $no,
-                                            "date" => $date, 
-                                            "news" => $news));
-                        $data = json_encode($data);
-                    }
-                    else {
-                        $no = $json[count($json)-1]->no;
-                        $json[] = array("no" => $no + 1,
-                                        "date" => $date, 
-                                        "news" => $news);
-                        $data = json_encode($json);
-                    }
-                    fwrite($handle, $data);
-                    fclose($handle);
+                    news($news, $date);
                     header("location: /ProjectEZ/View/NnEdata.php");
                 }
 

@@ -1,8 +1,10 @@
 <?php
-    session_start();
+    session_start(); 
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
+
+    require '../Model/StudentDB.php';
 ?>
 
 <!DOCTYPE html>
@@ -20,24 +22,15 @@
             if (isset($_GET['id'])) {		
                 $id = $_GET['id'];
 
-                $ezl = new mysqli("localhost", "root", "", "ezlearning");
-                if ($ezl->connect_error) {
-                    die("Data base Connection failed: " . $ezl->connect_error);
-                }
-
-                $sql = "DELETE FROM student WHERE ID=$id";
-                $qry = $ezl->query($sql);
-
-                header('location: ../View/Student.php');
+                delete($id);
             }
             else {
                 die("Invalid Request");
-            }   
+            }
             echo "✅Student Removed<br>";
         ?>
         <a href="/ProjectEZ/View/Student.php">Go Back</a>
     </fieldset>
-    
 
     <fieldset style="width: 98%;">
         <?php include '../View/Footer.php'; ?>

@@ -3,6 +3,8 @@
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
+
+    require '../Model/TeacherDB.php';
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +14,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Delete Action</title>
 </head>
-<body>
+<body> 
     <?php include('../View/Adminbar.php'); ?>
     <fieldset style="width: 50%; height: 450px;">
         <legend><b>Teachers</b></legend>
@@ -20,15 +22,7 @@
             if (isset($_GET['id'])) {		
                 $id = $_GET['id'];
 
-                $ezl = new mysqli("localhost", "root", "", "ezlearning");
-                if ($ezl->connect_error) {
-                    die("Data base Connection failed: " . $ezl->connect_error);
-                }
-
-                $sql = "DELETE FROM teacher WHERE id=$id";
-                $qry = $ezl->query($sql);
-
-                header('location: ../View/Teacher.php');
+                delete($id);
             }
             else {
                 die("Invalid Request");

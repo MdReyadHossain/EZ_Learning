@@ -1,4 +1,5 @@
 <?php
+    require '../Model/AdminDB.php';
     echo "<h2>Update Profile</h2>";
     session_start();
     $name = $email = $address = $phone = "";
@@ -55,19 +56,7 @@
         header('location: /ProjectEZ/View/Admin.php');
 
         //update data
-        $ezl = new mysqli("localhost", "root", "", "ezlearning");
-        if ($ezl->connect_error) {
-            die("Data base Connection failed: " . $ezl->connect_error);
-        }
-
-        $sql = "UPDATE admin SET Contact='$phone', Email='$email', Address='$address' WHERE InstituteName='EZ Learning'";
-
-        $_SESSION['phone'] = $phone;
-        $_SESSION['email'] = $email;
-        $_SESSION['address'] = $address;
-
-        $qry = $ezl->query($sql);
-        $ezl->close();
+        update($phone, $email, $address);
     }
 
     else if($isEmpty) {
