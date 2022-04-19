@@ -107,8 +107,54 @@
 
         if($isValid and $isChecked){
             // data insertion
-            insert_student($firstname, $lastname, $gender, $dob, $religion, $preaddress, $paraddress, $phone, $email, $username, $password);
-            // header("location: /ProjectEZ/Model/RegistrationDB.php");
+            define("file", '/Windows Application/Installed(64x)/xampp/htdocs/Project/Model/tempStudent.json');
+            $handle = fopen(file, "r");
+            $json = NULL;
+
+            if(filesize(file) > 0) {
+                $fr = fread($handle, filesize(file));
+                $json = json_decode($fr);
+                fclose($handle);
+            }
+            
+            $handle = fopen(file, "w");
+            if($json == NULL){
+                $id = 1;
+                $data = array(array("id" => $id,
+                                    "fname" => $firstname,
+                                    "lname" => $lastname,
+                                    "gender" => $gender,
+                                    "dob" => $dob,
+                                    "religion" => $religion,
+                                    "preaddress" => $preaddress,
+                                    "paraddress" => $paraddress,
+                                    "phone" => $phone,
+                                    "email" => $email,
+                                    "username" => $username,
+                                    "password" => $password));
+                $data = json_encode($data);
+            }
+            else {
+                $id = $json[count($json)-1]->id;
+                $json[] = array("id" => $id + 1,
+                                "fname" => $firstname,
+                                "lname" => $lastname,
+                                "gender" => $gender,
+                                "dob" => $dob,
+                                "religion" => $religion,
+                                "preaddress" => $preaddress,
+                                "paraddress" => $paraddress,
+                                "phone" => $phone,
+                                "email" => $email,
+                                "username" => $username,
+                                "password" => $password);
+                $data = json_encode($json);
+            }
+            fwrite($handle, $data);
+            fclose($handle);
+            setcookie('msg', '<b>✅ Registration Successful. <br>Please Wait for Approval</b>', time() + 1, '/');
+            //insert_student($firstname, $lastname, $gender, $dob, $religion, $preaddress, $paraddress, $phone, $email, $username, $password);
+            header("location: /ProjectEZ/View/Registration.php");
         }
 
         else if ($isEmpty) {

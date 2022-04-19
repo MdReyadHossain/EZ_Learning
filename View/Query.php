@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if(!isset($_COOKIE['rem'])) {
+        header('location: /ProjectEZ/Controller/Logout.php');
+    }
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
@@ -33,6 +36,7 @@
                     <th>Teacher Name</th>
                     <th>Query</th>
                     <th>Action</th>
+                    <th>Delete</th>
                 </tr>
                 <?php 
                     if ($result->num_rows > 0) {
@@ -42,21 +46,22 @@
                                 echo "<td>" . $data['Name'] . "</td>";
                                 echo "<td>" . $data['Query'] . "</td>";
                                 if ($data['Solve'] == 'no') {
-                                    echo "<td>" . "<a href='/ProjectEZ/View/QueryDone.php?id=" . $data['ID'] . "'>Done</a></td>";
+                                    echo "<td>" . "<a href='/ProjectEZ/Controller/QueryDone.php?id=" . $data['ID'] . "'>Done</a></td>";
                                 }
                                 else {
                                     echo "<td>✅Solved</td>";
                                 }
+                                echo "<td>" . "<a href='/ProjectEZ/Controller/QueryDelete.php?id=" . $data['ID'] . "'>❌Delete</a></td>";
                             echo "</tr>";
                         }
                     }
                     else {
                         echo "<tr>";
-                                echo "<td>--</td>";
-                                echo "<td>--</td>";
-                                echo "<td>--</td>";
-                                echo "<td>--</td>";
-                            echo "</tr>";
+                            echo "<td>--</td>";
+                            echo "<td>--</td>";
+                            echo "<td>--</td>";
+                            echo "<td>--</td>";
+                        echo "</tr>";
                     }
                 ?>
             </tbody>

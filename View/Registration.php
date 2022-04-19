@@ -5,16 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registration</title>
+        <script src="../View/js/registration.js"></script>
         <style> 
             legend {
-                font-weight: bold; 
+                font-weight: bold;
                 font-size: large;
             }
-            .error {
-                color: red;
-            }
         </style>
-    </head> 
+    </head>
     <body>
         <fieldset>
             <?php include('../View/Header.php'); ?>
@@ -23,8 +21,8 @@
             </div>
         </fieldset>
 
-        <form action="/ProjectEZ/Controller/RegistrationAction.php" target="_self" method="post" novalidate>
-            <fieldset style="width: 25em; margin-left: auto; margin-right: auto;">
+        <form action="/ProjectEZ/Controller/RegistrationAction.php" target="_self" method="post" onsubmit="return validregistration(this)" novalidate>
+            <fieldset style="width: 30em; margin-left: auto; margin-right: auto;">
                 <legend><h3>Registration</h3></legend>
                 <?php
                     if(isset($_COOKIE['msg'])) {
@@ -38,7 +36,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="text" name="firstname" id="fname"> <span class="error">*</span>
+                            <input type="text" name="firstname" id="fname"> <span id="fnameErr">*</span>
                         </td>
                     </tr>
                     <tr>
@@ -47,7 +45,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="text" name="lastname" id="lname"> <span class="error">*</span>
+                            <input type="text" name="lastname" id="lname"> <span id="lnameErr">*</span>
                         </td>
                     </tr>
                     <tr>
@@ -59,7 +57,7 @@
                             <input type="radio" name="gender" value="male" id="male"> <label for="male">Male</label> 
                             <input type="radio" name="gender" value="female" id="female"> <label for="female">Female</label>
                             <input type="radio" name="gender" value="other" id="other"> <label for="other">Others</label>
-                            <span class="error">*</span>
+                            <span id="genderErr">*</span>
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +66,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="date" name="dob" id="dob"> <span class="error">*<?php if(isset($_COOKIE['dob'])) {echo $_COOKIE['dob'];} ?></span>
+                            <input type="date" name="dob" id="dob"> <span id="dobErr">*<?php if(isset($_COOKIE['dob'])) {echo $_COOKIE['dob'];} ?></span>
                         </td>
                     </tr>
                     <tr>
@@ -83,7 +81,7 @@
                                 <option value="hindu">Hindu</option>
                                 <option value="christian">Christian</option>
                                 <option value="other">Other</option>
-                            </select> <span class="error">*<?php if(isset($_COOKIE['rel'])) {echo $_COOKIE['rel'];} ?></span>
+                            </select> <span id="relErr">*<?php if(isset($_COOKIE['rel'])) {echo $_COOKIE['rel'];} ?></span>
                         </td>
                     </tr>
                     <tr>
@@ -92,7 +90,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <textarea name="preaddress" id="preadd" placeholder="Enter address.."></textarea> <span class="error">*</span>
+                            <textarea name="preaddress" id="preadd" placeholder="Enter address.."></textarea> <span id="preErr">*</span>
                         </td>
                     </tr>
                     <tr>
@@ -119,7 +117,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="email" name="email" id="email"> <span class="error">*<?php if(isset($_COOKIE['email'])) {echo $_COOKIE['email'];} ?></span>
+                            <input type="email" name="email" id="email"> <span id="emailErr">*<?php if(isset($_COOKIE['email'])) {echo $_COOKIE['email'];} ?></span>
                         </td>
                     </tr>
                 </table>
@@ -132,7 +130,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="text" name="username" id="user"> <span class="error">*<?php if(isset($_COOKIE['user'])) {echo $_COOKIE['user'];} ?></span>
+                            <input type="text" name="username" id="user"> <span id="userErr">*<?php if(isset($_COOKIE['user'])) {echo $_COOKIE['user'];} ?></span>
                         </td>
                     </tr>
                     <tr>
@@ -141,7 +139,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="password" name="password" id="pass"> <span class="error">*<?php if(isset($_COOKIE['pass'])) {echo $_COOKIE['pass'];} ?></span>
+                            <input type="password" name="password" id="pass"> <span id="passErr">*<?php if(isset($_COOKIE['pass'])) {echo $_COOKIE['pass'];} ?></span>
                         </td>
                     </tr>
                     <tr>
@@ -150,7 +148,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="password" name="conpassword" id="conpass"> <span class="error">*</span>
+                            <input type="password" name="conpassword" id="conpass"> <span id="conpassErr">*</span>
                         </td>
                     </tr>
                 </table>

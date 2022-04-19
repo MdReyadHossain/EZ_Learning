@@ -13,14 +13,22 @@
 
         $username = test($_POST["user"]);
         $password = test($_POST["pass"]);
+        $remember = test($_POST["remember"]);
 
-        if(empty($username))
+        if(empty($username)) 
             $isEmpty = true;
 
         if(empty($password))
             $isEmpty = true;
 
-        if(!$isEmpty) {    
+        if(!$isEmpty) {  
+            if($remember == "") {
+                setcookie('rem', 'remember', time() + 5, '/');
+            }
+            else {
+                setcookie('rem', 'remember', 0, '/');
+            }
+            
             $server = "localhost";
             $db_user = "root";
             $db_pass = "";
@@ -45,10 +53,6 @@
                 
                 $_SESSION['username'] = $username;
                 $_SESSION['password'] = $password;
-
-                if(empty($_POST['remember'])) {
-                    setcookie('rem', '', time() + 10, '/');
-                }
                 header("Location: /ProjectEZ/View/Dashboard.php");
                 $isValid = true;
             }

@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if(!isset($_COOKIE['rem'])) {
+        header('location: /ProjectEZ/Controller/Logout.php');
+    }
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }

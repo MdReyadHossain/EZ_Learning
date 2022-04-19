@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if(!isset($_COOKIE['rem'])) {
+        header('location: /ProjectEZ/Controller/Logout.php');
+    }
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
@@ -11,6 +14,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../View/js/admin.js"></script>
     <title>News and Events</title>
 </head>
 <body>
@@ -18,12 +22,13 @@
     <fieldset style="width: 50%; height: 100%; float: left;">
         <legend><b>News And Events</b></legend>
         <br>
-        <form action="/ProjectEZ/Controller/NnEAction.php"  method="POST">
+        <form action="/ProjectEZ/Controller/NnEAction.php"  method="POST" onsubmit="return validnews(this)">
             <?php
                 if(isset($_COOKIE['msg'])) {
                     echo $_COOKIE['msg'];
                 }
             ?>
+            <span id="newsErr"></span>
             <table>
                 <tr>
                     <td>

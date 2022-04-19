@@ -37,4 +37,10 @@
         $sql = "DELETE FROM news WHERE ID=$id";
         $qry = $ezl->query($sql);
     }
+
+    function deletequery($id) {
+        $ezl = connect();
+        $sql = "DELETE FROM query WHERE ID=$id";
+        $qry = $ezl->query($sql);
+    }
 ?>

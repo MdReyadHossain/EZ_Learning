@@ -15,6 +15,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Signin</title>
+        <script src="../View/js/login.js"></script>
         <style>
             fieldset {
                 width: 500px;
@@ -29,7 +30,7 @@
             </div>
         </fieldset>
 
-        <form action="/ProjectEZ/Controller/LoginAction.php" target="_self" method="POST">
+        <form action="/ProjectEZ/Controller/LoginAction.php" target="_self" method="POST" onsubmit="return validlogin(this)">  
             <fieldset style="width: 500px; margin-left: auto; margin-right: auto;">
                 <legend><h3>SignIn</h3></legend>
                 <?php
@@ -37,6 +38,7 @@
                         echo $_COOKIE['msg'];
                     }
                 ?>
+                <span id="msg"></span>
                <table>
                     <tr>
                         <td>
@@ -45,6 +47,7 @@
                         <td>:</td>
                         <td>
                             <input type="text" name="user" id="user">
+                            <span id="userErr" style="color: red;"></span>
                         </td>
                     </tr>
                     <tr>
@@ -54,6 +57,7 @@
                         <td>:</td>
                         <td>
                             <input type="password" name="pass" id="pass">
+                            <span id="passErr" style="color: red;"></span>
                         </td>
                     </tr>
                 </table> 

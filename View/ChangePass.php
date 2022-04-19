@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if(!isset($_COOKIE['rem'])) {
+        header('location: /ProjectEZ/Controller/Logout.php');
+    }
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
@@ -11,12 +14,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../View/js/admin.js"></script>
     <title>Update Profile</title>
 </head>
 <body>
     <?php include('../View/Adminbar.php') ?>
 
-    <form action="/ProjectEZ/Controller/ChangepassAction.php" target="_self" method="post" novalidate>
+    <form action="/ProjectEZ/Controller/ChangepassAction.php" target="_self" method="post" onsubmit="return validchngpass(this)" novalidate>
         <fieldset style="width: 40%;">
             <legend><b>Change Password</b></legend>
             <br>
@@ -25,6 +29,7 @@
                     echo $_COOKIE['msg'];
                 }
             ?>
+            <span id="passErr"></span>
             <table>
                 <tr>
                     <td>
@@ -32,7 +37,8 @@
                     </td>
                     <td>:</td>
                     <td>
-                        <input type="password" name="currentpass" id="curpass">
+                        <input type="password" name="currentpass" id="curpass"><br>
+                        <span id="currErr"></span>
                     </td>
                 </tr>
                 <tr>
@@ -41,7 +47,8 @@
                     </td>
                     <td>:</td>
                     <td>
-                        <input type="password" name="newpassword" id="newpass">
+                        <input type="password" name="newpassword" id="newpass"><br>
+                        <span id="newErr"></span>
                     </td>
                 </tr>
                 <tr>
@@ -50,7 +57,8 @@
                     </td>
                     <td>:</td>
                     <td>
-                        <input type="password" name="repassword" id="repass">
+                        <input type="password" name="repassword" id="repass"><br>
+                        <span id="reErr"></span>
                     </td>
                 </tr>
             </table>

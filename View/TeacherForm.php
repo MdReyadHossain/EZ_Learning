@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    if(!isset($_COOKIE['rem'])) {
+        header('location: /ProjectEZ/Controller/Logout.php');
+    }
+    if(!isset($_SESSION['username'])) {
+        header("Location: /ProjectEZ/View/login.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,20 +14,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registration</title>
+        <script src="../View/js/registration.js"></script>
         <style> 
             legend {
                 font-weight: bold; 
                 font-size: large;
             }
-            .error {
-                color: red;
-            }
         </style>
     </head> 
     <body>
-        <?php include('../View/Adminbar.php') ?>
+        <?php 
+            include('../View/Adminbar.php');
+        ?>
 
-        <form action="/ProjectEZ/Controller/TeacherAction.php" target="_self" method="post" novalidate>
+        <form action="/ProjectEZ/Controller/TeacherAction.php" target="_self" method="post" onsubmit="return validteacher(this)" novalidate>
             <fieldset style="width: auto; height: 100%; float: left;">
                 <legend><b>Teacher Form</b></legend>
                 <?php
@@ -33,7 +42,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="text" name="name" id="name"> <span class="error">*</span>
+                            <input type="text" name="name" id="name"> <span id="nameErr">*</span>
                         </td>
                     </tr>
                     <tr>
@@ -45,7 +54,7 @@
                             <input type="radio" name="gender" value="Male" id="male"> <label for="male">Male</label> 
                             <input type="radio" name="gender" value="Memale" id="female"> <label for="female">Female</label>
                             <input type="radio" name="gender" value="Other" id="other"> <label for="other">Others</label>
-                            <span class="error">*</span>
+                            <span id="genderErr">*</span>
                         </td>
                     </tr>
                     <tr>
@@ -54,7 +63,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="date" name="dob" id="dob"> <span class="error">*<?php if(isset($_COOKIE['dob'])) {echo $_COOKIE['dob'];} ?></span>
+                            <input type="date" name="dob" id="dob"> <span id="dobErr">*<?php if(isset($_COOKIE['dob'])) {echo $_COOKIE['dob'];} ?></span>
                         </td>
                     </tr>
                     <tr>
@@ -63,7 +72,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="tel" name="phone" id="phone">
+                            <input type="tel" name="phone" id="phone"><span id="phoneErr">*</span>
                         </td>
                     </tr>
                     <tr>
@@ -72,7 +81,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="email" name="email" id="email"> <span class="error">*<?php if(isset($_COOKIE['email'])) {echo $_COOKIE['email'];} ?></span>
+                            <input type="email" name="email" id="email"> <span id="emailErr">*<?php if(isset($_COOKIE['email'])) {echo $_COOKIE['email'];} ?></span>
                         </td>
                     </tr>
                 </table>
@@ -85,7 +94,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="text" name="username" id="user"> <span class="error">*<?php if(isset($_COOKIE['user'])) {echo $_COOKIE['user'];} ?></span>
+                            <input type="text" name="username" id="user"> <span id="userErr">*<?php if(isset($_COOKIE['user'])) {echo $_COOKIE['user'];} ?></span>
                         </td>
                     </tr>
                     <tr>
@@ -94,7 +103,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="password" name="password" id="pass"> <span class="error">*<?php if(isset($_COOKIE['pass'])) {echo $_COOKIE['pass'];} ?></span>
+                            <input type="password" name="password" id="pass"> <span id="passErr">*<?php if(isset($_COOKIE['pass'])) {echo $_COOKIE['pass'];} ?></span>
                         </td>
                     </tr>
                     <tr>
@@ -103,7 +112,7 @@
                         </td>
                         <td>:</td>
                         <td>
-                            <input type="password" name="conpassword" id="conpass"> <span class="error">*</span>
+                            <input type="password" name="conpassword" id="conpass"> <span id="conpassErr">*</span>
                         </td>
                     </tr>
                 </table>

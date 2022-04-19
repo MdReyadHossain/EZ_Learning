@@ -15,5 +15,24 @@
         $qry = $ezl->query($sql);
 
         header("location: /ProjectEZ/View/Teacher.php");
+        $ezl->close();
+    }
+
+    function get($search) {
+        $conn = connect(); 
+
+        $sql = "SELECT * FROM teacher Where Name LIKE ?";
+        $stmt = $conn->prepare($sql);
+        $name = $search;
+        $name = "%" . $name . "%";
+        $stmt->bind_param("s", $name);
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $stmt->close();
+        $conn->close();
+
+        return $result;
     }
 ?>

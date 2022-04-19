@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if(!isset($_COOKIE['rem'])) {
+        header('location: /ProjectEZ/Controller/Logout.php');
+    }
     if(!isset($_SESSION['username'])) {
         header("Location: /ProjectEZ/View/login.php");
     }
@@ -57,10 +60,12 @@
                 $data = json_encode($arr2);
                 $fw = fwrite($handle, $data);
                 $fc = fclose($handle);
+
+                header('location: /ProjectEZ/View/Teacher.php');
             }
             else {
                 die("Invalid Request");
-            }   
+            }
             echo "<h3>✅Teacher Approved</h3><br>";
         ?>
         <a href="/ProjectEZ/View/Teacher.php">Go Back</a>
