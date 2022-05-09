@@ -32,7 +32,6 @@
             <br>
             <tbody>
                 <tr>
-                    <th>Teacher ID</th>
                     <th>Teacher Name</th>
                     <th>Query</th>
                     <th>Action</th>
@@ -42,16 +41,15 @@
                     if ($result->num_rows > 0) {
                         while ($data = $result->fetch_assoc()) {
                             echo "<tr>";
-                                echo "<td> 101-" . $data['ID'] . "</td>";
                                 echo "<td>" . $data['Name'] . "</td>";
                                 echo "<td>" . $data['Query'] . "</td>";
                                 if ($data['Solve'] == 'no') {
-                                    echo "<td>" . "<a href='/ProjectEZ/Controller/QueryDone.php?id=" . $data['ID'] . "'>Done</a></td>";
+                                    echo "<td><a href='/ProjectEZ/Controller/QueryDone.php?id=" . $data['ID'] . "'>Done</a></td>";
                                 }
                                 else {
                                     echo "<td>✅Solved</td>";
                                 }
-                                echo "<td>" . "<a href='/ProjectEZ/Controller/QueryDelete.php?id=" . $data['ID'] . "'>❌Delete</a></td>";
+                                echo "<td><a href='/ProjectEZ/Controller/QueryDelete.php?id=" . $data['ID'] . "'>❌Delete</a></td>";
                             echo "</tr>";
                         }
                     }

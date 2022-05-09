@@ -27,9 +27,6 @@
         $result = $ezl->query($sql);
 
         $ezl->close();
-        
-        setcookie('msg', '<b>✅Query Uploaded</b>', time() + 1, '/');
-        header("location: /Project/View/query.php");
     }
 
     function delete($id) {

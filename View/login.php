@@ -15,7 +15,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Signin</title>
-        <script src="../View/js/login.js"></script>
         <style>
             fieldset {
                 width: 500px;
@@ -74,5 +73,31 @@
         <fieldset style="width: 98%;">
             <?php include '../View/Footer.php'; ?>
         </fieldset>
+        <script>
+            function validlogin(login) {
+            let userErr = document.getElementById("userErr");
+            let passErr = document.getElementById("passErr");
+
+            userErr.innerHTML = "";
+            passErr.innerHTML = "";
+
+            let user = login.user.value;
+            let pass = login.pass.value;
+
+            let isvalid = true;
+            let isEmpty = false;
+            if(user === "") {
+                userErr.innerHTML = "❗Username should not empty!";
+                isvalid = false;
+                isEmpty = true;
+            }
+            if(pass === "") {
+                passErr.innerHTML = "❗Password should not empty!";
+                isvalid = false;
+                isEmpty = true;
+            }
+            return isvalid;
+        }
+        </script>
     </body>
 </html>

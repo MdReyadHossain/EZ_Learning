@@ -38,7 +38,7 @@
             </form>
         </div>
         <br>    
-        <div id="records">
+        <div id="records" align="center">
             <table border="1" align="center">
                 <tbody>
                     <tr>
@@ -104,6 +104,9 @@
 				xhttp.open("GET", resulturl + "?student=" + search);
 				xhttp.send();
 			}
+            else {
+                alert('Empty Search!');
+            }
         }
     </script>
     </body>

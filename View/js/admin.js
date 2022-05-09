@@ -1,17 +1,13 @@
 function validnews(nande) {
-    let newsErr = document.getElementById("newsErr");
-
-    newsErr.innerHTML = "";
-
     let news = nande.news.value;
 
     let isvalid = true;
 
     if (news == "") {
-        newsErr.innerHTML = "❗Should not be empty.";
+        alert("News and Events won't announce with empty box!");
         isvalid = false;
     }
-
+    
     return isvalid;
 }
 
@@ -22,6 +18,9 @@ function validchngpass(pass) {
     let reErr = document.getElementById("reErr");
 
     passErr.innerHTML = "";
+    currErr.innerHTML = "";
+    newErr.innerHTML = "";
+    reErr.innerHTML = "";
 
     let currentpass = pass.currentpass.value;
     let newpassword = pass.newpassword.value;

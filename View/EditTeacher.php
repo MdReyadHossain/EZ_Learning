@@ -51,12 +51,13 @@
         <fieldset style="width: 40%; height: auto;">
             <legend><b>Teachers Profile</b></legend>
             <br>
-            <form action="/ProjectEZ/Controller/EditTeacherAction.php" method="POST">
+            <form action="/ProjectEZ/Controller/EditTeacherAction.php" method="POST" onsubmit="return validteacher(this)">
                 <?php 
                     if(isset($_COOKIE['msg'])){
                         echo $_COOKIE['msg'];
                     }
                 ?>
+                <span id="inputErr" style="color: red;"></span>
                 <input type="number" name="id" value="<?php echo $id; ?>" hidden>
                 <table>
                     <tr>
@@ -87,6 +88,7 @@
                         <td>
                             <input type="date" name="dob" id="dob" value="<?php echo $dob; ?>">
                             <?php if(isset($_COOKIE['dob'])){echo $_COOKIE['dob'];} ?>
+                            <br><span id="dobErr" style="color: red;"></span>
                         </td>
                     </tr>
                     <tr>
@@ -125,5 +127,50 @@
         <fieldset style="width: 98%;">
             <?php include '../View/Footer.php'; ?>
         </fieldset>
+
+        <script>
+            function validteacher(valid) {
+                let inputErr = document.getElementById("inputErr");
+                inputErr.innerHTML = "";
+
+                let name = valid.name.value;
+                let gender = valid.gender.value;
+                let dob = valid.dob.value;
+                let phone = valid.phone.value;
+                let email = valid.email.value;
+                let username = valid.username.value;
+                let isvalid = true;
+
+                var date = new Date(dob);
+                var currdate = new Date();
+                
+                if (name == "") {
+                    inputErr.innerHTML = "❗Input should not be empty.";
+                    isvalid = false;
+                }
+                if (gender == "") {
+                    inputErr.innerHTML = "❗Input should not be empty.";
+                    isvalid = false;
+                }
+                if (dob == "") {
+                    inputErr.innerHTML = "❗Input should not be empty.";
+                    isvalid = false;
+                }
+                else if ((currdate.getFullYear() - date.getFullYear()) < 18) {
+                    dobErr.innerHTML = "❌Not old enough, Must be 18 or older.";
+                    isvalid = false;
+                }
+                if (email == "") {
+                    inputErr.innerHTML = "❗Input should not be empty.";
+                    isvalid = false;
+                }
+                if (username == "") {
+                    inputErr.innerHTML = "❗Input should not be empty.";
+                    isvalid = false;
+                }
+
+                return isvalid;
+            }
+        </script>
     </body>
 </html>

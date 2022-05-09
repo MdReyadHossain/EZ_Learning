@@ -37,7 +37,7 @@
                     </td>
                     <td>:</td>
                     <td>
-                        <input type="password" name="currentpass" id="curpass"><br>
+                        <input type="password" name="currentpass" id="curpass" onkeyup="validpass(this.value)"><span id="msg"></span><br>
                         <span id="currErr"></span>
                     </td>
                 </tr>
@@ -72,5 +72,23 @@
     <fieldset style="width: 98%;">
         <?php include '../View/Footer.php'; ?>
     </fieldset>
+
+    <script>
+        function validpass(pass) {
+            if (pass == "") { 
+                document.getElementById("msg").innerHTML = "";
+                return;
+            }
+            else {
+                let xhttp = new XMLHttpRequest();
+                xhttp.onload = function() {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                }
+                xhttp.open("POST", "../Controller/CheckpassAction.php");
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("pass=" + pass);
+            }
+        }
+    </script>
 </body>
 </html>

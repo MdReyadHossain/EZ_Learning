@@ -38,7 +38,7 @@
         </div>
         <br>
 
-        <div id="records">
+        <div id="records" align="center">
             <table border="1" align="center">
                 <tbody>
                     <tr>
@@ -56,7 +56,7 @@
                             while ($data = $qry->fetch_assoc()) {
                                 echo "<tr>";
                                 echo "<td> 101-" . $data['ID'] . "</td>";
-                                echo "<td>" . $data['Name'] . "</td>";
+                                echo "<td><a href='AdminChat.php?id=" . $data['ID'] . "'>" . $data['Name'] . "</a></td>";
                                 echo "<td>" . $data['Gender'] . "</td>";
                                 echo "<td>" . $data['DateOfBirth'] . "</td>";
                                 echo "<td>" . $data['Email'] . "</td>";
@@ -106,6 +106,9 @@
 				xhttp.open("GET", resulturl + "?teacher=" + search);
 				xhttp.send();
 			}
+            else {
+                alert('Empty Search!');
+            }
         }
     </script>
 </body>
