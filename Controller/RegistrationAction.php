@@ -105,7 +105,7 @@
             $passwordErr = "<br>❌Password not matched";
         }
 
-        if($isValid and $isChecked){
+        if($isValid and $isChecked){ // if(isVali == true)
             // data insertion
             define("file", '/Windows Application/Installed(64x)/xampp/htdocs/Project/Model/tempStudent.json');
             $handle = fopen(file, "r");
