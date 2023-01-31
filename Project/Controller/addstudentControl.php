@@ -1,5 +1,5 @@
 <?php 
-    require '../Model/RegistrationDB.php';
+    require '../Model/TeacherDB.php';
     session_start();    
     $firstname = $lastname = $gender = $dob = $religion = $preaddress = $paraddress = $phone = $email = $website = $username = $password = $conpassword = "";
     
@@ -105,61 +105,14 @@
             $passwordErr = "<br>❌Password not matched";
         }
 
-        if($isValid and $isChecked){ // if(isVali == true)
+        if($isValid and $isChecked){
             // data insertion
-            define("file", '/Windows Application/Installed(64x)/xampp/htdocs/Project/Model/tempStudent.json');
-            $handle = fopen(file, "r");
-            $json = NULL;
-
-            if(filesize(file) > 0) {
-                $fr = fread($handle, filesize(file));
-                $json = json_decode($fr);
-                fclose($handle);
-            }
-            
-            $handle = fopen(file, "w");
-            if($json == NULL){
-                $id = 1;
-                $data = array(array("id" => $id,
-                                    "fname" => $firstname,
-                                    "lname" => $lastname,
-                                    "gender" => $gender,
-                                    "dob" => $dob,
-                                    "religion" => $religion,
-                                    "preaddress" => $preaddress,
-                                    "paraddress" => $paraddress,
-                                    "phone" => $phone,
-                                    "email" => $email,
-                                    "username" => $username,
-                                    "password" => $password));
-                $data = json_encode($data);
-            }
-            else {
-                $id = $json[count($json)-1]->id;
-                $json[] = array("id" => $id + 1,
-                                "fname" => $firstname,
-                                "lname" => $lastname,
-                                "gender" => $gender,
-                                "dob" => $dob,
-                                "religion" => $religion,
-                                "preaddress" => $preaddress,
-                                "paraddress" => $paraddress,
-                                "phone" => $phone,
-                                "email" => $email,
-                                "username" => $username,
-                                "password" => $password);
-                $data = json_encode($json);
-            }
-            fwrite($handle, $data);
-            fclose($handle);
-            setcookie('msg', '<b>✅ Registration Successful. <br>Please Wait for Approval</b>', time() + 1, '/');
-            //insert_student($firstname, $lastname, $gender, $dob, $religion, $preaddress, $paraddress, $phone, $email, $username, $password);
-            header("location: /ProjectEZ/View/Registration.php");
+            insert_student($firstname, $lastname, $gender, $dob, $religion, $preaddress, $paraddress, $phone, $email, $username, $password);
         }
 
         else if ($isEmpty) {
             setcookie('msg', '<b>❌Required input missing</b><br>', time() + 1, '/');
-            header("location: /ProjectEZ/View/Registration.php");
+            header("location: /Project/View/addstudent.php");
         }
 
         else {
@@ -173,7 +126,7 @@
                 setcookie('user', $usernameErr, time() + 1, '/');
             if($passwordErr != NULL)
                 setcookie('pass', $passwordErr, time() + 1, '/');
-            header("location: /ProjectEZ/View/Registration.php");
+            header("location: /Project/View/addstudent.php");
         }
     }
 ?>

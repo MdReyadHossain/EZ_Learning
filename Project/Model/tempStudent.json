@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "fname": "Reyad",
+        "lname": "Hossain",
+        "gender": "male",
+        "dob": "2000-02-01",
+        "religion": "islam",
+        "preaddress": "Boshundhara r\/a, Dhaka, Bangladesh",
+        "paraddress": null,
+        "phone": "01956394373",
+        "email": "reyadhosen@gmail.com",
+        "username": "admin",
+        "password": "01956394373"
+    },
+    {
+        "id": 2,
+        "fname": "Munira",
+        "lname": "Zebin",
+        "gender": "female",
+        "dob": "2000-01-01",
+        "religion": "islam",
+        "preaddress": "Vasantek, Dhaka Cantonment, Dhaka",
+        "paraddress": "jk",
+        "phone": "01745482666",
+        "email": "munirazebin229@gmail.com",
+        "username": "admin",
+        "password": "01956394373"
+    }
+]

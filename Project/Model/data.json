@@ -1,0 +1,29 @@
+[
+    {
+        "sl": 1,
+        "name": "Banik Parthib",
+        "email": "banikparthib401@gmail.com",
+        "username": "p banik",
+        "password": "01234567",
+        "gender": "Male",
+        "dob": "2001-12-22"
+    },
+    {
+        "sl": 2,
+        "name": "Munira Zebin",
+        "email": "munirazebin229@gmail.com",
+        "username": "zebin",
+        "password": "87654321",
+        "gender": "Female",
+        "dob": "2000-03-10"
+    },
+    {
+        "sl": 3,
+        "name": "Reyad Hossain",
+        "email": "reyadhosen@gmail.com",
+        "username": "reyad",
+        "password": "12345678",
+        "gender": "Male",
+        "dob": "1998-09-10"
+    }
+]
