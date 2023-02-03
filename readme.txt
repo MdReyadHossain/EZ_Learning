@@ -1,4 +1,4 @@
-The EZ Learning Institute is an online-based educational website that serves as a platform for an educational institution to conduct online academic activities such as academic registration, access to study materials, student performance and progress management etc. with precision. Currently, it consists of four independent users including admin, teacher, student and guardian. 
+The EZ Learning Institute is an online-based educational website that serves as a platform for an educational institution to conduct online academic activities such as academic registration, access to study materials, student performance and progress management etc. with precision. Currently, it consists of four independent users including admin, teacher. 
 
 There are 2-types of Users here. They are:
 
